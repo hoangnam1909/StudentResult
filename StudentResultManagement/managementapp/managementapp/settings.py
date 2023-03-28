@@ -49,7 +49,8 @@ CKEDITOR_UPLOAD_PATH = "ckeditor/management/"
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-    )
+    ),
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
 }
 
 MIDDLEWARE = [
