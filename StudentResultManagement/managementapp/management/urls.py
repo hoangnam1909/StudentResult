@@ -4,6 +4,7 @@ from . import views
 
 
 r = routers.DefaultRouter()
+r.register('faculty', views.FacultyViewSet)
 
 
 urlpatterns = [

@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'rest_framework',
     'drf_yasg',
-    'oauth2_provider'
+    'oauth2_provider',
+    'corsheaders',
 ]
 
 CKEDITOR_UPLOAD_PATH = "ckeditor/management/"
@@ -59,7 +60,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+APPEND_SLASH = False
 
 AUTH_USER_MODEL = 'management.User'
 
@@ -140,3 +146,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CLIENT_ID = 'MFItUriUve0odE7lK5WK9KNvEFHRG9dyBDXOc558'
+
+CLIENT_SECRET = 'Ht1Ob45yWU1WtILHdHs8gZoT2ZjsoeO4iqpB6DcZn3uxWp9SNWOE4pP2iI5LP3l491m0XwIukIYbVo79ohwj8PZQ2SoK0VyGsXHcPOpgjR2kA7PDIKrmnNoHxEEKuLb5'
