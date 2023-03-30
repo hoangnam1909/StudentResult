@@ -1,5 +1,6 @@
-from rest_framework import serializers
+from rest_framework import serializers, validators
 from .models import *
+import re
 
 
 class FacultySerializer(serializers.ModelSerializer):
@@ -18,10 +19,10 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         data = validated_data.copy()
-        u = User(**data)
-        u.set_password(u.password)
-        u.save()
-        return u
+        user = User(**data)
+        user.set_password(user.password)
+        user.save()
+        return user
 
     class Meta:
         model = User
@@ -31,3 +32,4 @@ class UserSerializer(serializers.ModelSerializer):
             'password': {'write_only': True},
             'avatar': {'write_only': True}
         }
+

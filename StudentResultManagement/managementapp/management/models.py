@@ -1,5 +1,9 @@
+import re
+
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.http import JsonResponse
 
 
 class BaseModel(models.Model):
@@ -18,6 +22,15 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+    def clean(self):
+        if len(re.findall(r"^\d{10}[a-z]+@ou.edu.vn$", self.email)) == 0:
+            message = {"message": "{email} is not an OU email".format(email=self.email)}
+            raise ValidationError(message=message)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
 
 
 class Teacher(models.Model):
@@ -83,10 +96,18 @@ class Course(BaseModel):
 
 
 class Mark(BaseModel):
-    is_midterm = models.BooleanField(default=False)
-    is_final = models.BooleanField(default=False)
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
     course = models.ForeignKey('Course', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('student', 'course')
+
+
+class MarkDetail(BaseModel):
+    is_midterm = models.BooleanField(default=False)
+    is_final = models.BooleanField(default=False)
+    value = models.FloatField(default=0)
+    mark = models.ForeignKey('Mark', related_name='marks_detail', on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('is_midterm', 'is_final')
