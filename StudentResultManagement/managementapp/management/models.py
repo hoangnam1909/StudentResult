@@ -1,9 +1,5 @@
-import re
-
-from django.core.exceptions import ValidationError
-from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.http import JsonResponse
+from django.db import models
 
 
 class BaseModel(models.Model):
@@ -17,20 +13,12 @@ class BaseModel(models.Model):
 
 class User(AbstractUser):
     email = models.EmailField(unique=True, null=False)
-    gender = models.BooleanField(default=False, null=False)
-    avatar = models.ImageField(upload_to='users/%Y/%m', null=False)
+    gender = models.BooleanField(default=False)
+    avatar = models.ImageField(upload_to='users/%Y/%m')
 
     def __str__(self):
-        return self.email
-
-    def clean(self):
-        if len(re.findall(r"^\d{10}[a-z]+@ou.edu.vn$", self.email)) == 0:
-            message = {"message": "{email} is not an OU email".format(email=self.email)}
-            raise ValidationError(message=message)
-
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        return super().save(*args, **kwargs)
+        return '{username} - {email}'.format(username=super().username,
+                                             email=self.email)
 
 
 class Teacher(models.Model):
@@ -52,7 +40,7 @@ class Student(models.Model):
     def __str__(self):
         return '{code} - {fullname}' \
             .format(code=self.code,
-                    fullname=self.user.fullname)
+                    fullname=self.user.first_name + ' ' + self.user.last_name)
 
 
 class Subject(BaseModel):
@@ -66,7 +54,7 @@ class Subject(BaseModel):
         return '{id} - {name}'.format(id=self.id, name=self.name)
 
 
-class Faculty(models.Model):
+class Faculty(BaseModel):
     name = models.CharField(max_length=100, null=False)
 
     def __str__(self):

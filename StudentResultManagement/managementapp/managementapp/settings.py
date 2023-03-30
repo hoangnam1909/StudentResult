@@ -72,7 +72,7 @@ AUTH_USER_MODEL = 'management.User'
 
 ROOT_URLCONF = 'managementapp.urls'
 
-MEDIA_ROOT = '%s/courses/static/' % BASE_DIR
+MEDIA_ROOT = '%s/management/static/' % BASE_DIR
 
 TEMPLATES = [
     {
@@ -132,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Etc/GMT-7'
 
 USE_I18N = True
 
@@ -148,13 +148,13 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CLIENT_ID = 'MFItUriUve0odE7lK5WK9KNvEFHRG9dyBDXOc558'
+CLIENT_ID = 'bmVMP3FSd4czmQm24ARPCTjznx9oZCq7n7RwbtzD'
 
-CLIENT_SECRET = 'Ht1Ob45yWU1WtILHdHs8gZoT2ZjsoeO4iqpB6DcZn3uxWp9SNWOE4pP2iI5LP3l491m0XwIukIYbVo79ohwj8PZQ2SoK0VyGsXHcPOpgjR2kA7PDIKrmnNoHxEEKuLb5'
+CLIENT_SECRET = 'Uhx00qnSua6xlLSRNmUPYvDH1kDibAssrRhSqo0m2NAYB62yr7AF28BhL04YhZ4kJxPfNF2B6wts9LuBrjocZ1Bm7C0eELsGSLTdJRSpvXcuLVKcrsChmbM7iRnAV2C7'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'dev.nhn1909@gmail.com'
-EMAIL_HOST_PASSWORD = 'vrbbqbxxvhakjzve'
+EMAIL_HOST_USER = 'nguyenhoangnam023@gmail.com'
+EMAIL_HOST_PASSWORD = 'vywexzibggzbqhnm'

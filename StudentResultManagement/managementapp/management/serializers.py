@@ -1,12 +1,13 @@
 from rest_framework import serializers, validators
 from .models import *
+from .validators import *
 import re
 
 
 class FacultySerializer(serializers.ModelSerializer):
     class Meta:
         model = Faculty
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'created_date', 'updated_date']
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -27,9 +28,16 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'email', 'gender',
-                  'username', 'password', 'avatar', 'image']
+                  'username', 'password', 'avatar', 'image', 'date_joined']
         extra_kwargs = {
             'password': {'write_only': True},
-            'avatar': {'write_only': True}
+            'avatar': {'write_only': True},
+            'email': {'validators': [validate_ou_email, ]}
         }
 
+
+class TeacherSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False)
+    class Meta:
+        model = Teacher
+        fields = ['code', 'user']
