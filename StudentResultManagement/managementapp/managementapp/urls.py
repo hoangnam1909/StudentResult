@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import debug_toolbar
 from django.contrib import admin
 from django.urls import path, re_path, include
 from rest_framework import permissions
@@ -28,7 +29,7 @@ schema_view = get_schema_view(
         license=openapi.License(name="Nguyễn Hoàng Nam@2023"),
     ),
     public=True,
-    permission_classes=(permissions.AllowAny,),)
+    permission_classes=(permissions.AllowAny,), )
 
 urlpatterns = [
     path('', include('management.urls')),
@@ -45,5 +46,7 @@ urlpatterns = [
             name='schema-redoc'),
     path('o/', include('oauth2_provider.urls',
                        namespace='oauth2_provider')),
+    path('__debug__/', include(debug_toolbar.urls))
+
     # path('api/token/refresh/', TokenRe)
 ]

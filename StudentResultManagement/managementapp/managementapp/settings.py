@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'oauth2_provider',
     'corsheaders',
+    'debug_toolbar',
 ]
 
 CKEDITOR_UPLOAD_PATH = "ckeditor/management/"
@@ -62,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -141,7 +143,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -159,3 +161,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'nguyenhoangnam023@gmail.com'
 EMAIL_HOST_PASSWORD = 'vywexzibggzbqhnm'
 
+INTERNAL_IPS = [
+    '127.0.0.1'
+]
