@@ -63,3 +63,50 @@ class UserViewSet(viewsets.ViewSet,
             return Response(status=status.HTTP_201_CREATED)
         except Exception as ex:
             return Response(data=str(ex), status=status.HTTP_400_BAD_REQUEST)
+
+
+class SubjectViewSet(viewsets.ViewSet,
+                     generics.ListAPIView):
+    model = Subject
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+
+
+class ClassViewSet(viewsets.ViewSet,
+                   generics.ListAPIView):
+    model = Class
+    queryset = Class.objects.all()
+    serializer_class = ClassSerializer
+
+
+class CourseViewSet(viewsets.ViewSet,
+                    generics.ListAPIView):
+    model = Course
+    queryset = Course.objects.filter(active=True)
+    serializer_class = CourseSerializer
+
+
+class MarkViewSet(viewsets.ViewSet,
+                  generics.ListAPIView):
+    model = Mark
+    queryset = Mark.objects.all()
+    serializer_class = MarkSerializer
+
+
+class TopicViewSet(viewsets.ViewSet,
+                   generics.ListAPIView,
+                   generics.CreateAPIView,
+                   generics.RetrieveAPIView):
+    model = Topic
+    queryset = Topic.objects.filter(active=True)
+    serializer_class = TopicSerializer
+
+    @action(methods=['get'], detail=True,
+            url_path='comments', url_name='comments')
+    def get_comments(self, request, pk):
+        topic = Topic.objects.get(pk=pk)
+        comments = CommentSerializer(topic.comments, many=True,
+                                     context={'request': request})
+
+        return Response(data=comments.data,
+                        status=status.HTTP_200_OK)

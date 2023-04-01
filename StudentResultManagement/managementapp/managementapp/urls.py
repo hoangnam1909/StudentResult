@@ -21,15 +21,14 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Course API",
+        title="Student Result Management API",
         default_version='v1',
         description="APIs for Student Result Management",
         contact=openapi.Contact(email="1951052125nam@ou.edu.vn"),
         license=openapi.License(name="Nguyễn Hoàng Nam@2023"),
     ),
     public=True,
-    permission_classes=(permissions.AllowAny,),
-)
+    permission_classes=(permissions.AllowAny,),)
 
 urlpatterns = [
     path('', include('management.urls')),
@@ -47,11 +46,3 @@ urlpatterns = [
     path('o/', include('oauth2_provider.urls',
                        namespace='oauth2_provider')),
 ]
-
-
-# urlpatterns = [
-#     path('', include('management.urls')),
-#     path('admin/', admin.site.urls),
-#     path('o/', include('oauth2_provider.urls',
-#                        namespace='oauth2_provider'))
-# ]

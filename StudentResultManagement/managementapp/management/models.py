@@ -78,7 +78,7 @@ class Course(BaseModel):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '{subject_code} - {class_code}}' \
+        return '{subject_code} - {class_code}' \
             .format(subject_code=self.subject.id,
                     class_code=self.course_class.id)
 
@@ -90,6 +90,13 @@ class Mark(BaseModel):
     class Meta:
         unique_together = ('student', 'course')
 
+    def __str__(self):
+        return '[{subject_code} - {class_code}] [{student_id} - {student_fullname}]' \
+            .format(student_id=self.student.code,
+                    student_fullname=self.student.user.first_name + ' ' + self.student.user.last_name,
+                    subject_code=self.course.subject.id,
+                    class_code=self.course.course_class.id)
+
 
 class MarkDetail(BaseModel):
     is_midterm = models.BooleanField(default=False)
@@ -99,6 +106,16 @@ class MarkDetail(BaseModel):
 
     class Meta:
         unique_together = ('is_midterm', 'is_final')
+
+    def __str__(self):
+        mark_type = ''
+        if self.is_midterm:
+            mark_type = "Midterm"
+        if self.is_final:
+            mark_type = "Final"
+
+        return '[{type}] {mark}' \
+            .format(type=mark_type, mark=self.mark)
 
 
 class Topic(BaseModel):
