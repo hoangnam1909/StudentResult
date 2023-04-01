@@ -33,6 +33,12 @@ class UserViewSet(viewsets.ViewSet,
     serializer_class = UserSerializer
     parser_classes = [parsers.MultiPartParser, ]
 
+    def get_permissions(self):
+        if self.action in ['current_user']:
+            return [permissions.IsAuthenticated()]
+
+        return [permissions.AllowAny()]
+
     def create(self, request, *args, **kwargs):
         try:
             user = User()
@@ -63,6 +69,16 @@ class UserViewSet(viewsets.ViewSet,
             return Response(status=status.HTTP_201_CREATED)
         except Exception as ex:
             return Response(data=str(ex), status=status.HTTP_400_BAD_REQUEST)
+
+    @action(methods=['get', 'put'], detail=False, url_path='current-user')
+    def current_user(self, request):
+        u = request.user
+        if request.method.__eq__('PUT'):
+            for k, v in request.data.items():
+                setattr(u, k, v)
+            u.save()
+
+        return Response(UserSerializer(u, context={'request': request}).data)
 
 
 class SubjectViewSet(viewsets.ViewSet,
@@ -98,11 +114,22 @@ class TopicViewSet(viewsets.ViewSet,
                    generics.CreateAPIView,
                    generics.RetrieveAPIView):
     model = Topic
-    queryset = Topic.objects.filter(active=True)
+    queryset = Topic.objects.filter(active=True, comments__active=True).distinct()
     serializer_class = TopicSerializer
 
+    def get_serializer_class(self):
+        if self.action == 'add_comment':
+            return CommentCreateSerializer
+        return TopicSerializer
+
+    def get_permissions(self):
+        if self.action in ['add_comment', 'update_comment']:
+            return [permissions.IsAuthenticated()]
+
+        return [permissions.AllowAny()]
+
     @action(methods=['get'], detail=True,
-            url_path='comments', url_name='comments')
+            url_path='comments')
     def get_comments(self, request, pk):
         topic = Topic.objects.get(pk=pk)
         comments = CommentSerializer(topic.comments, many=True,
@@ -110,3 +137,32 @@ class TopicViewSet(viewsets.ViewSet,
 
         return Response(data=comments.data,
                         status=status.HTTP_200_OK)
+
+    @action(methods=['post'], detail=True,
+            url_path='comments')
+    def add_comment(self, request, pk):
+        topic = Topic.objects.get(pk=pk)
+        user = User.objects.get(pk=request.user.id)
+
+        c = Comment(content=request.data['content'],
+                    user=user,
+                    topic=topic)
+        c.save()
+
+        return Response(CommentSerializer(c, context={'request': request}).data,
+                        status=status.HTTP_201_CREATED)
+
+    @action(methods=['patch'], detail=True,
+            url_path='comments')
+    def update_comment(self, request, pk):
+        topic = Topic.objects.get(pk=pk)
+        user = User.objects.get(pk=request.data.get('user_id'))
+
+        c = Comment(content=request.data['content'],
+                    user=user,
+                    topic=topic)
+        topic.comments.add(c)
+        topic.save()
+
+        return Response(CommentSerializer(c, context={'request': request}).data,
+                        status=status.HTTP_201_CREATED)
