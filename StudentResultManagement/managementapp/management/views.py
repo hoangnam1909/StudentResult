@@ -1,7 +1,13 @@
 from django.http import HttpResponse
-from rest_framework import viewsets, generics, parsers, permissions, status, views
+from django.utils.decorators import method_decorator
+from django.views.decorators.debug import sensitive_post_parameters
+from oauth2_provider.models import get_access_token_model
+from oauth2_provider.signals import app_authorized
+from oauth2_provider.views import TokenView
+from rest_framework import viewsets, generics, parsers, permissions, status, views, response
 from rest_framework.exceptions import APIException
 from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny
 from rest_framework.views import Response
 from .models import *
 from .serializers import *
@@ -11,6 +17,32 @@ import json
 from django.core.mail import send_mail
 from random import randint
 from .utils import *
+
+
+class CustomTokenView(TokenView):
+    @method_decorator(sensitive_post_parameters("password"))
+    def post(self, request, *args, **kwargs):
+        url, headers, body, status = self.create_token_response(request)
+        if status == 200:
+            body = json.loads(body)
+            access_token = body.get("access_token")
+            if access_token is not None:
+                token = get_access_token_model().objects.get(
+                    token=access_token)
+                app_authorized.send(
+                    sender=self, request=request,
+                    token=token)
+
+                body['user_info'] = {
+                    'username': token.user.username,
+                    'image': 'http://127.0.0.1:8000/static/' + token.user.avatar.name,
+                }
+                body = json.dumps(body)
+
+        response = HttpResponse(content=body, status=status)
+        for k, v in headers.items():
+            response[k] = v
+        return response
 
 
 class FacultyViewSet(viewsets.ViewSet, generics.ListAPIView):

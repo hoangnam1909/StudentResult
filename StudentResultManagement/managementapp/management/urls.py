@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework import routers
-from . import views
 
+from . import views
 
 r = routers.DefaultRouter()
 r.register('faculty', views.FacultyViewSet)
@@ -13,7 +13,6 @@ r.register('course', views.CourseViewSet)
 r.register('mark', views.MarkViewSet)
 r.register('topic', views.TopicViewSet)
 
-
 urlpatterns = [
-    path('', include(r.urls))
+    path('', include(r.urls)),
 ]
