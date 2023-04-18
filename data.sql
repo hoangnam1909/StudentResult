@@ -16,21 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `auth_group`
---
-
-DROP TABLE IF EXISTS `auth_group`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_group` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `auth_group`
 --
 
@@ -40,25 +25,6 @@ LOCK TABLES `auth_group` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `auth_group_permissions`
---
-
-DROP TABLE IF EXISTS `auth_group_permissions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_group_permissions` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `group_id` int NOT NULL,
-  `permission_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
-  KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
-  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
-  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `auth_group_permissions`
 --
 
@@ -66,24 +32,6 @@ LOCK TABLES `auth_group_permissions` WRITE;
 /*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `auth_permission`
---
-
-DROP TABLE IF EXISTS `auth_permission`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_permission` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content_type_id` int NOT NULL,
-  `codename` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
-  CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `auth_permission`
@@ -96,55 +44,14 @@ INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2
 UNLOCK TABLES;
 
 --
--- Table structure for table `django_admin_log`
---
-
-DROP TABLE IF EXISTS `django_admin_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `django_admin_log` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `action_time` datetime(6) NOT NULL,
-  `object_id` longtext COLLATE utf8mb4_unicode_ci,
-  `object_repr` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `action_flag` smallint unsigned NOT NULL,
-  `change_message` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content_type_id` int DEFAULT NULL,
-  `user_id` bigint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
-  KEY `django_admin_log_user_id_c564eba6_fk_management_user_id` (`user_id`),
-  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
-  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_management_user_id` FOREIGN KEY (`user_id`) REFERENCES `management_user` (`id`),
-  CONSTRAINT `django_admin_log_chk_1` CHECK ((`action_flag` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `django_admin_log`
 --
 
 LOCK TABLES `django_admin_log` WRITE;
 /*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
-INSERT INTO `django_admin_log` VALUES (1,'2023-03-30 15:00:06.134367','6','giangvien1 - 2645392858thanh@ou.edu.vn',1,'[{\"added\": {}}]',6,5),(2,'2023-03-30 15:00:09.186714','2645392858','2645392858 - Nguyễn Văn Thành',1,'[{\"added\": {}}]',12,5),(3,'2023-03-30 15:01:43.480736','1','Công nghệ thông tin',1,'[{\"added\": {}}]',9,5),(4,'2023-03-30 15:01:47.954995','2','Công nghệ thực phẩm',1,'[{\"added\": {}}]',9,5),(5,'2023-03-30 15:01:54.358730','3','Kế toán - Kiểm toán',1,'[{\"added\": {}}]',9,5),(6,'2023-03-30 15:02:01.020668','4','Ngôn ngữ Anh',1,'[{\"added\": {}}]',9,5),(7,'2023-03-30 15:02:05.625885','5','Luật kinh tế',1,'[{\"added\": {}}]',9,5),(8,'2023-03-30 15:02:10.527832','6','Xây dựng',1,'[{\"added\": {}}]',9,5),(9,'2023-03-30 15:02:14.933696','7','Luật',1,'[{\"added\": {}}]',9,5),(10,'2023-03-30 15:02:21.841570','5','Luật kinh tế',3,'',9,5),(11,'2023-03-31 14:24:01.876851','DH19IT01','DH19IT01',1,'[{\"added\": {}}]',7,5),(12,'2023-03-31 14:24:04.574167','DH19IT02','DH19IT02',1,'[{\"added\": {}}]',7,5),(13,'2023-03-31 14:24:07.547569','DH19IT03','DH19IT03',1,'[{\"added\": {}}]',7,5),(14,'2023-03-31 14:25:14.629831','ITEC3408','ITEC3408 - Lập trình mạng',1,'[{\"added\": {}}]',10,5),(15,'2023-03-31 14:25:20.640691','ITEC3421','ITEC3421 - Các công nghệ lập trình hiện đại',1,'[{\"added\": {}}]',10,5),(16,'2023-03-31 14:25:30.470549','ITEC3417','ITEC3417 - Khai phá dữ liệu',1,'[{\"added\": {}}]',10,5),(17,'2023-03-31 14:25:40.161743','ITEC4407','ITEC4407 - Lập trình Java',1,'[{\"added\": {}}]',10,5),(18,'2023-03-31 14:27:57.745658','3','ITEC4407 - DH19IT03',1,'[{\"added\": {}}]',8,5),(19,'2023-03-31 14:43:56.723908','1','Mark object (1)',1,'[{\"added\": {}}]',14,5),(20,'2023-03-31 14:44:06.681049','1','MarkDetail object (1)',1,'[{\"added\": {}}]',16,5),(21,'2023-03-31 14:44:14.576018','2','MarkDetail object (2)',1,'[{\"added\": {}}]',16,5),(22,'2023-03-31 15:04:49.292681','1','Bài tập về nhà môn Java',1,'[{\"added\": {}}]',11,5),(23,'2023-03-31 15:05:03.454551','1','Comment object (1)',1,'[{\"added\": {}}]',15,5),(24,'2023-03-31 15:05:21.442909','2','Comment object (2)',1,'[{\"added\": {}}]',15,5);
+INSERT INTO `django_admin_log` VALUES (1,'2023-03-30 15:00:06.134367','6','giangvien1 - 2645392858thanh@ou.edu.vn',1,'[{\"added\": {}}]',6,5),(2,'2023-03-30 15:00:09.186714','2645392858','2645392858 - Nguyễn Văn Thành',1,'[{\"added\": {}}]',12,5),(3,'2023-03-30 15:01:43.480736','1','Công nghệ thông tin',1,'[{\"added\": {}}]',9,5),(4,'2023-03-30 15:01:47.954995','2','Công nghệ thực phẩm',1,'[{\"added\": {}}]',9,5),(5,'2023-03-30 15:01:54.358730','3','Kế toán - Kiểm toán',1,'[{\"added\": {}}]',9,5),(6,'2023-03-30 15:02:01.020668','4','Ngôn ngữ Anh',1,'[{\"added\": {}}]',9,5),(7,'2023-03-30 15:02:05.625885','5','Luật kinh tế',1,'[{\"added\": {}}]',9,5),(8,'2023-03-30 15:02:10.527832','6','Xây dựng',1,'[{\"added\": {}}]',9,5),(9,'2023-03-30 15:02:14.933696','7','Luật',1,'[{\"added\": {}}]',9,5),(10,'2023-03-30 15:02:21.841570','5','Luật kinh tế',3,'',9,5),(11,'2023-03-31 14:24:01.876851','DH19IT01','DH19IT01',1,'[{\"added\": {}}]',7,5),(12,'2023-03-31 14:24:04.574167','DH19IT02','DH19IT02',1,'[{\"added\": {}}]',7,5),(13,'2023-03-31 14:24:07.547569','DH19IT03','DH19IT03',1,'[{\"added\": {}}]',7,5),(14,'2023-03-31 14:25:14.629831','ITEC3408','ITEC3408 - Lập trình mạng',1,'[{\"added\": {}}]',10,5),(15,'2023-03-31 14:25:20.640691','ITEC3421','ITEC3421 - Các công nghệ lập trình hiện đại',1,'[{\"added\": {}}]',10,5),(16,'2023-03-31 14:25:30.470549','ITEC3417','ITEC3417 - Khai phá dữ liệu',1,'[{\"added\": {}}]',10,5),(17,'2023-03-31 14:25:40.161743','ITEC4407','ITEC4407 - Lập trình Java',1,'[{\"added\": {}}]',10,5),(18,'2023-03-31 14:27:57.745658','3','ITEC4407 - DH19IT03',1,'[{\"added\": {}}]',8,5),(19,'2023-03-31 14:43:56.723908','1','Mark object (1)',1,'[{\"added\": {}}]',14,5),(20,'2023-03-31 14:44:06.681049','1','MarkDetail object (1)',1,'[{\"added\": {}}]',16,5),(21,'2023-03-31 14:44:14.576018','2','MarkDetail object (2)',1,'[{\"added\": {}}]',16,5),(22,'2023-03-31 15:04:49.292681','1','Bài tập về nhà môn Java',1,'[{\"added\": {}}]',11,5),(23,'2023-03-31 15:05:03.454551','1','Comment object (1)',1,'[{\"added\": {}}]',15,5),(24,'2023-03-31 15:05:21.442909','2','Comment object (2)',1,'[{\"added\": {}}]',15,5),(25,'2023-04-17 06:24:46.508370','1951052125','1951052125 - Nguyen Hoang Nam',2,'[{\"changed\": {\"fields\": [\"Faculty\", \"Regular class\"]}}]',13,5),(26,'2023-04-17 08:10:53.045378','13','1951311222 - 1951311222thuy@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"password\", \"First name\"]}}]',6,5),(27,'2023-04-17 08:11:20.229483','10','1951315263 - 1951315263linh@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"password\", \"First name\"]}}]',6,5),(28,'2023-04-17 08:12:41.202552','10','1951315263 - 1951315263linh@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"First name\"]}}]',6,5),(29,'2023-04-17 08:13:39.005335','12','1951312222 - 1951312222thuy@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"password\", \"First name\"]}}]',6,5),(30,'2023-04-17 08:20:52.052551','15','1951052123 - 1951052123nam@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"First name\"]}}]',6,5),(31,'2023-04-17 08:21:14.103345','15','1951052123 - 1951052123nam@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"First name\"]}}]',6,5),(32,'2023-04-17 08:22:39.326977','3','1951052125 - 1951052125nam@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"First name\"]}}]',6,5),(33,'2023-04-17 08:36:25.352438','3','1951052125 - 1951052125nam@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"password\", \"First name\"]}}]',6,5),(34,'2023-04-17 08:36:34.953650','3','1951052125 - 1951052125nam@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"First name\"]}}]',6,5),(35,'2023-04-17 08:37:18.068780','3','1951052125 - 1951052125nam@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"password\", \"First name\"]}}]',6,5),(36,'2023-04-17 08:38:02.061493','3','1951052125 - 1951052125nam@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"password\", \"First name\"]}}]',6,5),(37,'2023-04-17 08:39:03.388214','3','1951052125 - 1951052125nam@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"password\", \"First name\"]}}]',6,5),(38,'2023-04-17 08:44:14.492602','3','1951052125 - 1951052125nam@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"First name\"]}}]',6,5),(39,'2023-04-17 08:50:10.468856','3','1951052125 - 1951052125nam@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"password\", \"First name\"]}}]',6,5),(40,'2023-04-17 08:51:14.753437','3','1951052125 - 1951052125nam@ou.edu.vn',2,'[{\"changed\": {\"fields\": [\"First name\", \"password\"]}}]',6,5);
 /*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `django_content_type`
---
-
-DROP TABLE IF EXISTS `django_content_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `django_content_type` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `app_label` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `django_content_type`
@@ -157,22 +64,6 @@ INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group
 UNLOCK TABLES;
 
 --
--- Table structure for table `django_migrations`
---
-
-DROP TABLE IF EXISTS `django_migrations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `django_migrations` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `app` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `applied` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `django_migrations`
 --
 
@@ -183,49 +74,14 @@ INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2023-03
 UNLOCK TABLES;
 
 --
--- Table structure for table `django_session`
---
-
-DROP TABLE IF EXISTS `django_session`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `django_session` (
-  `session_key` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `session_data` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expire_date` datetime(6) NOT NULL,
-  PRIMARY KEY (`session_key`),
-  KEY `django_session_expire_date_a5c62663` (`expire_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `django_session`
 --
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('h0khi7g7bx7aoz4n4ktj6dtvn0ndpkgk','.eJxVjDsOwyAQBe9CHaHlYwgp0-cMaIElOIlAMnYV5e4Rkgu7fTPzvszjtha_dVr8nNiNTexy3ALGN9UB0gvrs_HY6rrMgQ-F77TzR0v0ue_u6aBgL6OegDRaZSFJJDAQbRZOO-kwKACNCnQWgZQg6bIRFi0mCflKxkVAxX5_1Ac3iQ:1phtXY:x5TvLYfZbM3GGZO2iJ_PtwxN5PDRaxreVd0Aqbgu5l4','2023-04-13 14:46:12.790567');
+INSERT INTO `django_session` VALUES ('qjw3a8kktzjso57n7ijn9fyg36rbqhel','.eJxVjDsOwyAQBe9CHaHlYwgp0-cMaIElOIlAMnYV5e4Rkgu7fTPzvszjtha_dVr8nNiNTexy3ALGN9UB0gvrs_HY6rrMgQ-F77TzR0v0ue_u6aBgL6OegDRaZSFJJDAQbRZOO-kwKACNCnQWgZQg6bIRFi0mCflKxkVAxX5_1Ac3iQ:1poIHd:9t6OL9kCka5AOrs9RTMqIzlZ2daceSDhCIZHFohL9l4','2023-05-01 06:24:13.424484');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `management_class`
---
-
-DROP TABLE IF EXISTS `management_class`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `management_class` (
-  `created_date` datetime(6) NOT NULL,
-  `updated_date` datetime(6) NOT NULL,
-  `active` tinyint(1) NOT NULL,
-  `id` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `faculty_id` bigint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `management_class_faculty_id_1f5d0034_fk_management_faculty_id` (`faculty_id`),
-  CONSTRAINT `management_class_faculty_id_1f5d0034_fk_management_faculty_id` FOREIGN KEY (`faculty_id`) REFERENCES `management_faculty` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `management_class`
@@ -238,64 +94,14 @@ INSERT INTO `management_class` VALUES ('2023-03-31 14:24:01.875851','2023-03-31 
 UNLOCK TABLES;
 
 --
--- Table structure for table `management_comment`
---
-
-DROP TABLE IF EXISTS `management_comment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `management_comment` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `created_date` datetime(6) NOT NULL,
-  `updated_date` datetime(6) NOT NULL,
-  `active` tinyint(1) NOT NULL,
-  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `topic_id` bigint NOT NULL,
-  `user_id` bigint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `management_comment_topic_id_249ad124_fk_management_topic_id` (`topic_id`),
-  KEY `management_comment_user_id_fb3999b9_fk_management_user_id` (`user_id`),
-  CONSTRAINT `management_comment_topic_id_249ad124_fk_management_topic_id` FOREIGN KEY (`topic_id`) REFERENCES `management_topic` (`id`),
-  CONSTRAINT `management_comment_user_id_fb3999b9_fk_management_user_id` FOREIGN KEY (`user_id`) REFERENCES `management_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `management_comment`
 --
 
 LOCK TABLES `management_comment` WRITE;
 /*!40000 ALTER TABLE `management_comment` DISABLE KEYS */;
-INSERT INTO `management_comment` VALUES (1,'2023-03-31 15:05:03.453046','2023-03-31 15:05:03.453046',1,'MySQL nhé em',1,6),(2,'2023-03-31 15:05:21.441981','2023-03-31 15:05:21.441981',1,'không biết bạn ơi',1,9);
+INSERT INTO `management_comment` VALUES (1,'2023-03-31 15:05:03.453046','2023-03-31 15:05:03.453046',1,'MySQL nhé em',1,6),(2,'2023-03-31 15:05:21.441981','2023-03-31 15:05:21.441981',1,'không biết bạn ơi',1,9),(3,'2023-04-01 06:45:24.749032','2023-04-01 06:45:24.749032',1,'comment add',1,9),(4,'2023-04-01 06:46:32.396390','2023-04-01 06:46:32.396390',1,'comment add',1,9),(5,'2023-04-01 06:48:24.185422','2023-04-01 06:48:24.185422',1,'comment add',1,9),(6,'2023-04-01 06:50:55.925459','2023-04-01 06:50:55.925459',1,'cai qq',1,9),(7,'2023-04-01 06:51:32.042828','2023-04-01 06:51:32.042828',1,'cai qq',1,9),(8,'2023-04-01 07:00:49.359038','2023-04-01 07:00:49.359038',1,'cai qq',1,9),(9,'2023-04-01 07:10:50.914868','2023-04-01 07:10:50.914868',1,'sao z',1,9),(10,'2023-04-01 07:48:36.256141','2023-04-01 07:48:36.256141',1,'admin cmt',1,5);
 /*!40000 ALTER TABLE `management_comment` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `management_course`
---
-
-DROP TABLE IF EXISTS `management_course`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `management_course` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `created_date` datetime(6) NOT NULL,
-  `updated_date` datetime(6) NOT NULL,
-  `active` tinyint(1) NOT NULL,
-  `start_date` datetime(6) NOT NULL,
-  `end_date` datetime(6) NOT NULL,
-  `course_class_id` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subject_id` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `teacher_id` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `management_course_subject_id_f47327e7_fk_management_subject_id` (`subject_id`),
-  KEY `management_course_teacher_id_62ed651c_fk_management_teacher_code` (`teacher_id`),
-  KEY `management_course_course_class_id_b431b4eb_fk_managemen` (`course_class_id`),
-  CONSTRAINT `management_course_course_class_id_b431b4eb_fk_managemen` FOREIGN KEY (`course_class_id`) REFERENCES `management_class` (`id`),
-  CONSTRAINT `management_course_subject_id_f47327e7_fk_management_subject_id` FOREIGN KEY (`subject_id`) REFERENCES `management_subject` (`id`),
-  CONSTRAINT `management_course_teacher_id_62ed651c_fk_management_teacher_code` FOREIGN KEY (`teacher_id`) REFERENCES `management_teacher` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `management_course`
@@ -308,25 +114,6 @@ INSERT INTO `management_course` VALUES (3,'2023-03-31 14:27:57.743045','2023-03-
 UNLOCK TABLES;
 
 --
--- Table structure for table `management_course_students`
---
-
-DROP TABLE IF EXISTS `management_course_students`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `management_course_students` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `course_id` bigint NOT NULL,
-  `student_id` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `management_course_students_course_id_student_id_807610c6_uniq` (`course_id`,`student_id`),
-  KEY `management_course_st_student_id_a4d8d3a2_fk_managemen` (`student_id`),
-  CONSTRAINT `management_course_st_course_id_42f4619e_fk_managemen` FOREIGN KEY (`course_id`) REFERENCES `management_course` (`id`),
-  CONSTRAINT `management_course_st_student_id_a4d8d3a2_fk_managemen` FOREIGN KEY (`student_id`) REFERENCES `management_student` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `management_course_students`
 --
 
@@ -335,23 +122,6 @@ LOCK TABLES `management_course_students` WRITE;
 INSERT INTO `management_course_students` VALUES (15,3,'1951021263'),(11,3,'1951052123'),(14,3,'1951052125'),(13,3,'1951312263'),(12,3,'1951315263');
 /*!40000 ALTER TABLE `management_course_students` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `management_faculty`
---
-
-DROP TABLE IF EXISTS `management_faculty`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `management_faculty` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `active` tinyint(1) NOT NULL,
-  `created_date` datetime(6) NOT NULL,
-  `updated_date` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `management_faculty`
@@ -364,28 +134,6 @@ INSERT INTO `management_faculty` VALUES (1,'Công nghệ thông tin',1,'2023-03-
 UNLOCK TABLES;
 
 --
--- Table structure for table `management_mark`
---
-
-DROP TABLE IF EXISTS `management_mark`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `management_mark` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `created_date` datetime(6) NOT NULL,
-  `updated_date` datetime(6) NOT NULL,
-  `active` tinyint(1) NOT NULL,
-  `course_id` bigint NOT NULL,
-  `student_id` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `management_mark_student_id_course_id_3ba013f2_uniq` (`student_id`,`course_id`),
-  KEY `management_mark_course_id_90d337cf_fk_management_course_id` (`course_id`),
-  CONSTRAINT `management_mark_course_id_90d337cf_fk_management_course_id` FOREIGN KEY (`course_id`) REFERENCES `management_course` (`id`),
-  CONSTRAINT `management_mark_student_id_0bb31a28_fk_management_student_code` FOREIGN KEY (`student_id`) REFERENCES `management_student` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `management_mark`
 --
 
@@ -394,29 +142,6 @@ LOCK TABLES `management_mark` WRITE;
 INSERT INTO `management_mark` VALUES (1,'2023-03-31 14:43:56.720387','2023-03-31 14:43:56.720901',1,3,'1951052123');
 /*!40000 ALTER TABLE `management_mark` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `management_markdetail`
---
-
-DROP TABLE IF EXISTS `management_markdetail`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `management_markdetail` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `created_date` datetime(6) NOT NULL,
-  `updated_date` datetime(6) NOT NULL,
-  `active` tinyint(1) NOT NULL,
-  `is_midterm` tinyint(1) NOT NULL,
-  `is_final` tinyint(1) NOT NULL,
-  `value` double NOT NULL,
-  `mark_id` bigint NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `management_markdetail_is_midterm_is_final_e51abc03_uniq` (`is_midterm`,`is_final`),
-  KEY `management_markdetail_mark_id_10908646_fk_management_mark_id` (`mark_id`),
-  CONSTRAINT `management_markdetail_mark_id_10908646_fk_management_mark_id` FOREIGN KEY (`mark_id`) REFERENCES `management_mark` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `management_markdetail`
@@ -429,56 +154,14 @@ INSERT INTO `management_markdetail` VALUES (1,'2023-03-31 14:44:06.680029','2023
 UNLOCK TABLES;
 
 --
--- Table structure for table `management_student`
---
-
-DROP TABLE IF EXISTS `management_student`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `management_student` (
-  `code` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `faculty_id` bigint DEFAULT NULL,
-  `regular_class_id` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_id` bigint NOT NULL,
-  PRIMARY KEY (`code`),
-  KEY `management_student_faculty_id_6a38d2d3_fk_management_faculty_id` (`faculty_id`),
-  KEY `management_student_regular_class_id_3292b374_fk_managemen` (`regular_class_id`),
-  KEY `management_student_user_id_bef90ea2_fk_management_user_id` (`user_id`),
-  CONSTRAINT `management_student_faculty_id_6a38d2d3_fk_management_faculty_id` FOREIGN KEY (`faculty_id`) REFERENCES `management_faculty` (`id`),
-  CONSTRAINT `management_student_regular_class_id_3292b374_fk_managemen` FOREIGN KEY (`regular_class_id`) REFERENCES `management_class` (`id`),
-  CONSTRAINT `management_student_user_id_bef90ea2_fk_management_user_id` FOREIGN KEY (`user_id`) REFERENCES `management_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `management_student`
 --
 
 LOCK TABLES `management_student` WRITE;
 /*!40000 ALTER TABLE `management_student` DISABLE KEYS */;
-INSERT INTO `management_student` VALUES ('1951021223',NULL,NULL,8),('1951021263',NULL,NULL,9),('1951052123',NULL,NULL,15),('1951052125',NULL,NULL,3),('1951311222',NULL,NULL,13),('1951312222',NULL,NULL,12),('1951312263',NULL,NULL,11),('1951315263',NULL,NULL,10);
+INSERT INTO `management_student` VALUES ('1951021223',NULL,NULL,8),('1951021263',NULL,NULL,9),('1951052123',NULL,NULL,15),('1951052125',1,'DH19IT03',3),('1951311222',NULL,NULL,13),('1951312222',NULL,NULL,12),('1951312263',NULL,NULL,11),('1951315263',NULL,NULL,10);
 /*!40000 ALTER TABLE `management_student` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `management_subject`
---
-
-DROP TABLE IF EXISTS `management_subject`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `management_subject` (
-  `created_date` datetime(6) NOT NULL,
-  `updated_date` datetime(6) NOT NULL,
-  `active` tinyint(1) NOT NULL,
-  `id` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `credit` int NOT NULL,
-  `midterm_percent` int NOT NULL,
-  `final_percent` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `management_subject`
@@ -491,22 +174,6 @@ INSERT INTO `management_subject` VALUES ('2023-03-31 14:25:14.628823','2023-03-3
 UNLOCK TABLES;
 
 --
--- Table structure for table `management_teacher`
---
-
-DROP TABLE IF EXISTS `management_teacher`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `management_teacher` (
-  `code` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint NOT NULL,
-  PRIMARY KEY (`code`),
-  KEY `management_teacher_user_id_c9334f14_fk_management_user_id` (`user_id`),
-  CONSTRAINT `management_teacher_user_id_c9334f14_fk_management_user_id` FOREIGN KEY (`user_id`) REFERENCES `management_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `management_teacher`
 --
 
@@ -515,27 +182,6 @@ LOCK TABLES `management_teacher` WRITE;
 INSERT INTO `management_teacher` VALUES ('2645392858',6);
 /*!40000 ALTER TABLE `management_teacher` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `management_topic`
---
-
-DROP TABLE IF EXISTS `management_topic`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `management_topic` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `created_date` datetime(6) NOT NULL,
-  `updated_date` datetime(6) NOT NULL,
-  `active` tinyint(1) NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `author_id` bigint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `management_topic_author_id_8eda13e2_fk_management_user_id` (`author_id`),
-  CONSTRAINT `management_topic_author_id_8eda13e2_fk_management_user_id` FOREIGN KEY (`author_id`) REFERENCES `management_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `management_topic`
@@ -548,60 +194,14 @@ INSERT INTO `management_topic` VALUES (1,'2023-03-31 15:04:49.292030','2023-03-3
 UNLOCK TABLES;
 
 --
--- Table structure for table `management_user`
---
-
-DROP TABLE IF EXISTS `management_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `management_user` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `password` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_login` datetime(6) DEFAULT NULL,
-  `is_superuser` tinyint(1) NOT NULL,
-  `username` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `first_name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_staff` tinyint(1) NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  `date_joined` datetime(6) NOT NULL,
-  `email` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gender` tinyint(1) NOT NULL,
-  `avatar` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `management_user`
 --
 
 LOCK TABLES `management_user` WRITE;
 /*!40000 ALTER TABLE `management_user` DISABLE KEYS */;
-INSERT INTO `management_user` VALUES (3,'pbkdf2_sha256$390000$PSZFMDrrxvvTR8EPqdKsxi$bb3S7UX4BAzV5cpYXdfqFTjBxRRTQ3MhAY690K7Mp70=',NULL,0,'1951052125','Nguyen Hoang','Nam',0,1,'2023-03-30 14:03:24.039347','1951052125nam@ou.edu.vn',0,'users/2023/03/7490_1_U6j9HqY.png'),(5,'pbkdf2_sha256$390000$U2lBr1J5LqtusWH3jp19RB$jbaWtRxfPU9eNOrZUIMmEJjduJeF4I+zhny9LNHf8AY=','2023-03-30 14:46:12.786027',1,'admin','','',1,1,'2023-03-30 14:46:06.992372','admin@gmail.com',0,''),(6,'1',NULL,0,'giangvien1','Nguyễn Văn','Thành',0,1,'2023-03-30 14:59:03.000000','2645392858thanh@ou.edu.vn',0,'users/2023/03/2a898ac3d8fac7365776a0e4120d0105.jpg'),(8,'pbkdf2_sha256$390000$ZJUOAOI5UJjxn2rJxBiNRu$Ly8uWn4azYM4BQrswS0Kv70wVYcz3KiZEurKw+mmFSQ=',NULL,0,'1951021223','Nguyen Hoang','Nam',0,1,'2023-03-30 16:00:07.183393','1951021223nam@ou.edu.vn',0,'users/2023/03/7490_1_R9fLHbv.png'),(9,'pbkdf2_sha256$390000$zUjEqoelhYL2rVcYVWSzaG$0ziMOayY4dzewTiVSBPWEMfINIQX0YKH5HhbrdfwyR4=',NULL,0,'1951021263','Nguyen Hoang','Nam',0,1,'2023-03-30 16:26:59.624349','1951021263linh@ou.edu.vn',0,'users/2023/03/7490_1_76cMD5R.png'),(10,'pbkdf2_sha256$390000$tWqkrTPEbpGEHZpPcH4HDi$3oWLodIXxEK1IwFzfxuo6cXdw5rNG/2Hy8nG2Z5wtwY=',NULL,0,'1951315263','Nguyen Hoang','Nam',0,1,'2023-03-30 16:31:52.111873','1951315263linh@ou.edu.vn',0,'users/2023/03/7490_1_TyWr1FM.png'),(11,'pbkdf2_sha256$390000$DZzm2RqM5e9TmNJhsNLeUL$j0EuvYFI/82g8S0AKbFJ+qYiFOrIyF3JSqKU11zSBbc=',NULL,0,'1951312263','Nguyen Hoang','Nam',0,1,'2023-03-30 16:35:03.077482','1951312263linh@ou.edu.vn',0,'users/2023/03/7490_1_U8nOJ0Z.png'),(12,'pbkdf2_sha256$390000$XAe18EJdFY9Ma8v4R3m0hj$XWBLXZvcgGrSP+jAewSWIC6NEo0QM7wQnEUh4KHzzxA=',NULL,0,'1951312222','Nguyen Hoang','Nam',0,1,'2023-03-30 16:42:52.250436','1951312222thuy@ou.edu.vn',0,'users/2023/03/7490_1_LisZ4Fw.png'),(13,'pbkdf2_sha256$390000$IVa3L9yCPz6xRstkPLMOms$FQ4JoFYzeW3SWIyxoPWDoVQwxT4IBiLaX1ZuJ+vHmPc=',NULL,0,'1951311222','Nguyen Hoang','Nam',0,1,'2023-03-30 16:47:33.114290','1951311222thuy@ou.edu.vn',0,'users/2023/03/7490_1_8M0m22r.png'),(15,'pbkdf2_sha256$390000$YXe68SCgKQ84fT3w7QQOGJ$FkJuQw3k9js0u69NmYtwSJppm5JPCcf5RFLiWirhgHk=',NULL,0,'1951052123','Luong Hoang','Nam',0,1,'2023-03-31 13:50:13.156921','1951052123nam@ou.edu.vn',0,'users/2023/03/9763c363dcc5389b61d4_josZTeD.jpg');
+INSERT INTO `management_user` VALUES (3,'pbkdf2_sha256$390000$PSZFMDrrxvvTR8EPqdKsxi$bb3S7UX4BAzV5cpYXdfqFTjBxRRTQ3MhAY690K7Mp70=',NULL,0,'1951052125','Hoang qq','Nam',0,1,'2023-03-30 14:03:24.039347','1951052125nam@ou.edu.vn',0,'users/2023/03/7490_1_U6j9HqY.png'),(5,'pbkdf2_sha256$390000$U2lBr1J5LqtusWH3jp19RB$jbaWtRxfPU9eNOrZUIMmEJjduJeF4I+zhny9LNHf8AY=','2023-04-17 06:24:13.330071',1,'admin','','',1,1,'2023-03-30 14:46:06.992372','admin@gmail.com',0,'users/2023/03/7490_1.png'),(6,'1',NULL,0,'giangvien1','Nguyễn Văn','Thành',0,1,'2023-03-30 14:59:03.000000','2645392858thanh@ou.edu.vn',0,'users/2023/03/2a898ac3d8fac7365776a0e4120d0105.jpg'),(8,'pbkdf2_sha256$390000$ZJUOAOI5UJjxn2rJxBiNRu$Ly8uWn4azYM4BQrswS0Kv70wVYcz3KiZEurKw+mmFSQ=',NULL,0,'1951021223','Nguyen Hoang','Nam',0,1,'2023-03-30 16:00:07.183393','1951021223nam@ou.edu.vn',0,'users/2023/03/7490_1_R9fLHbv.png'),(9,'pbkdf2_sha256$390000$zUjEqoelhYL2rVcYVWSzaG$0ziMOayY4dzewTiVSBPWEMfINIQX0YKH5HhbrdfwyR4=',NULL,0,'1951021263','Nguyen Hoang','Nam',0,1,'2023-03-30 16:26:59.624349','1951021263linh@ou.edu.vn',0,'users/2023/03/7490_1_76cMD5R.png'),(10,'pbkdf2_sha256$390000$DZzm2RqM5e9TmNJhsNLeUL$j0EuvYFI/82g8S0AKbFJ+qYiFOrIyF3JSqKU11zSBbc=',NULL,0,'1951315263','Nguye','Nam',0,1,'2023-03-30 16:31:52.111873','1951315263linh@ou.edu.vn',0,'users/2023/03/7490_1_TyWr1FM.png'),(11,'pbkdf2_sha256$390000$DZzm2RqM5e9TmNJhsNLeUL$j0EuvYFI/82g8S0AKbFJ+qYiFOrIyF3JSqKU11zSBbc=',NULL,0,'1951312263','Nguyen Hoang','Nam',0,1,'2023-03-30 16:35:03.077482','1951312263linh@ou.edu.vn',0,'users/2023/03/7490_1_U8nOJ0Z.png'),(12,'pbkdf2_sha256$390000$DZzm2RqM5e9TmNJhsNLeUL$j0EuvYFI/82g8S0AKbFJ+qYiFOrIyF3JSqKU11zSBbc=',NULL,0,'1951312222','Nguyen','Nam',0,1,'2023-03-30 16:42:52.250436','1951312222thuy@ou.edu.vn',0,'users/2023/03/7490_1_LisZ4Fw.png'),(13,'pbkdf2_sha256$390000$DZzm2RqM5e9TmNJhsNLeUL$j0EuvYFI/82g8S0AKbFJ+qYiFOrIyF3JSqKU11zSBbc=',NULL,0,'1951311222','Hoang','Nam',0,1,'2023-03-30 16:47:33.114290','1951311222thuy@ou.edu.vn',0,'users/2023/03/7490_1_8M0m22r.png'),(15,'pbkdf2_sha256$390000$0ofW5HMWwvm4UzM0NezedS$vO+8sf0paVdoRrTRKbpQv2da8lYFMjY9zxIA5yRS6DA=',NULL,0,'1951052123','Luong Hoang','Nam',0,1,'2023-03-31 13:50:13.156921','1951052123nam@ou.edu.vn',0,'users/2023/03/9763c363dcc5389b61d4_josZTeD.jpg');
 /*!40000 ALTER TABLE `management_user` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `management_user_groups`
---
-
-DROP TABLE IF EXISTS `management_user_groups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `management_user_groups` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` bigint NOT NULL,
-  `group_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `management_user_groups_user_id_group_id_feb3e18c_uniq` (`user_id`,`group_id`),
-  KEY `management_user_groups_group_id_8e7cbab4_fk_auth_group_id` (`group_id`),
-  CONSTRAINT `management_user_groups_group_id_8e7cbab4_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
-  CONSTRAINT `management_user_groups_user_id_e433e6d4_fk_management_user_id` FOREIGN KEY (`user_id`) REFERENCES `management_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `management_user_groups`
@@ -613,25 +213,6 @@ LOCK TABLES `management_user_groups` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `management_user_user_permissions`
---
-
-DROP TABLE IF EXISTS `management_user_user_permissions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `management_user_user_permissions` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` bigint NOT NULL,
-  `permission_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `management_user_user_per_user_id_permission_id_8146bd2d_uniq` (`user_id`,`permission_id`),
-  KEY `management_user_user_permission_id_1cf8b5b7_fk_auth_perm` (`permission_id`),
-  CONSTRAINT `management_user_user_permission_id_1cf8b5b7_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
-  CONSTRAINT `management_user_user_user_id_195d266b_fk_managemen` FOREIGN KEY (`user_id`) REFERENCES `management_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `management_user_user_permissions`
 --
 
@@ -641,73 +222,14 @@ LOCK TABLES `management_user_user_permissions` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `oauth2_provider_accesstoken`
---
-
-DROP TABLE IF EXISTS `oauth2_provider_accesstoken`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `oauth2_provider_accesstoken` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expires` datetime(6) NOT NULL,
-  `scope` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `application_id` bigint DEFAULT NULL,
-  `user_id` bigint DEFAULT NULL,
-  `created` datetime(6) NOT NULL,
-  `updated` datetime(6) NOT NULL,
-  `source_refresh_token_id` bigint DEFAULT NULL,
-  `id_token_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `token` (`token`),
-  UNIQUE KEY `source_refresh_token_id` (`source_refresh_token_id`),
-  UNIQUE KEY `id_token_id` (`id_token_id`),
-  KEY `oauth2_provider_acce_application_id_b22886e1_fk_oauth2_pr` (`application_id`),
-  KEY `oauth2_provider_acce_user_id_6e4c9a65_fk_managemen` (`user_id`),
-  CONSTRAINT `oauth2_provider_acce_application_id_b22886e1_fk_oauth2_pr` FOREIGN KEY (`application_id`) REFERENCES `oauth2_provider_application` (`id`),
-  CONSTRAINT `oauth2_provider_acce_id_token_id_85db651b_fk_oauth2_pr` FOREIGN KEY (`id_token_id`) REFERENCES `oauth2_provider_idtoken` (`id`),
-  CONSTRAINT `oauth2_provider_acce_source_refresh_token_e66fbc72_fk_oauth2_pr` FOREIGN KEY (`source_refresh_token_id`) REFERENCES `oauth2_provider_refreshtoken` (`id`),
-  CONSTRAINT `oauth2_provider_acce_user_id_6e4c9a65_fk_managemen` FOREIGN KEY (`user_id`) REFERENCES `management_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `oauth2_provider_accesstoken`
 --
 
 LOCK TABLES `oauth2_provider_accesstoken` WRITE;
 /*!40000 ALTER TABLE `oauth2_provider_accesstoken` DISABLE KEYS */;
-INSERT INTO `oauth2_provider_accesstoken` VALUES (1,'kk5hkKwzyoXhMnELZqEcz5PcGV11oQ','2023-03-31 02:50:52.817884','read write',1,12,'2023-03-30 16:50:52.817884','2023-03-30 16:50:52.817884',NULL,NULL);
+INSERT INTO `oauth2_provider_accesstoken` VALUES (1,'kk5hkKwzyoXhMnELZqEcz5PcGV11oQ','2023-03-31 02:50:52.817884','read write',1,12,'2023-03-30 16:50:52.817884','2023-03-30 16:50:52.817884',NULL,NULL),(2,'n3Gp4AWt4OuhDEr3psF1iDAlHsTDkG','2023-04-01 15:19:46.389499','read write',1,12,'2023-04-01 05:19:46.390835','2023-04-01 05:19:46.390835',NULL,NULL),(3,'36omgd55tof0Trv8nI8MSOp3Sb1rOF','2023-04-01 15:29:41.846473','read write',1,3,'2023-04-01 05:29:41.848271','2023-04-01 05:29:41.848271',NULL,NULL),(4,'D5IEWmovFGb7btYzlvG6YuyxTcLdcD','2023-04-01 15:45:15.012349','read write',1,5,'2023-04-01 05:45:15.013348','2023-04-01 05:45:15.013348',NULL,NULL),(5,'yKAmzpdWUEYk9c4oV2aVphkgvLEmpT','2023-04-01 17:44:37.993361','read write',1,5,'2023-04-01 07:44:37.994379','2023-04-01 07:44:37.994379',NULL,NULL),(6,'JhCSwaUufiaqjJWdxmarBbKMq0GFvV','2023-04-03 18:16:11.806682','read write',1,5,'2023-04-03 08:16:11.806682','2023-04-03 08:16:11.806682',NULL,NULL),(7,'4oBZyfBEUT25CmDydyUbVDke6E4hTR','2023-04-03 18:22:04.984686','read write',1,5,'2023-04-03 08:22:04.984686','2023-04-03 08:22:04.984686',NULL,NULL),(8,'CjDQYOkuWTvaL8Js6m5KgO3Tb1aU3s','2023-04-03 18:24:10.143440','read write',1,5,'2023-04-03 08:24:10.143440','2023-04-03 08:24:10.143440',NULL,NULL),(9,'gJ8fn4Ln5aPMzmr4VfCbYMKuEPPGKp','2023-04-03 18:24:28.024411','read write',1,5,'2023-04-03 08:24:28.024411','2023-04-03 08:24:28.024411',NULL,NULL),(10,'90LrJjDlgPAzZZBRx9XEu4D7ITtVUb','2023-04-03 18:26:57.862435','read write',1,5,'2023-04-03 08:26:57.862435','2023-04-03 08:26:57.863431',NULL,NULL),(11,'gWIq2Aws25sIwxs9MAImTE1yLCxWOE','2023-04-03 18:27:13.087112','read write',1,5,'2023-04-03 08:27:13.087112','2023-04-03 08:27:13.087112',NULL,NULL),(12,'1oMfwOpJcisS5luCBLlItTmXJJAO4m','2023-04-03 18:27:38.261864','read write',1,5,'2023-04-03 08:27:38.261864','2023-04-03 08:27:38.261864',NULL,NULL),(13,'fgZrfHzoN1k0mjVtQ0tP8Ter31g2Gx','2023-04-03 18:27:51.877337','read write',1,5,'2023-04-03 08:27:51.878334','2023-04-03 08:27:51.878334',NULL,NULL),(14,'cER1BY92p1cL0ddXXdHq5FwAszn2Gl','2023-04-03 18:28:38.152323','read write',1,5,'2023-04-03 08:28:38.152323','2023-04-03 08:28:38.152323',NULL,NULL),(15,'0g4EHYdMsMbzcU1i68fkoCZfX409k9','2023-04-03 18:28:40.093584','read write',1,5,'2023-04-03 08:28:40.094592','2023-04-03 08:28:40.094592',NULL,NULL),(16,'LGd9v8dEOEQgFa4Uwg34Dckf5gTDtE','2023-04-03 18:32:04.219825','read write',1,5,'2023-04-03 08:32:04.221072','2023-04-03 08:32:04.221072',NULL,NULL),(17,'AKwfoIBXaJ1VlJnLwGF5QSDKcmDJoZ','2023-04-03 18:34:33.046731','read write',1,5,'2023-04-03 08:34:33.046731','2023-04-03 08:34:33.046731',NULL,NULL),(18,'T4WkKY1Xfw1EuIuJwqmdQ1HviAhSwF','2023-04-03 18:35:28.545352','read write',1,5,'2023-04-03 08:35:28.546859','2023-04-03 08:35:28.546859',NULL,NULL),(19,'e7ZqOGJn84J2zW0xfEYn3eBb1LxGlF','2023-04-03 18:35:30.389975','read write',1,5,'2023-04-03 08:35:30.391019','2023-04-03 08:35:30.391019',NULL,NULL),(20,'MkjRrrNlBjIho2Av5iQJ24lMqnWiZK','2023-04-03 18:35:41.072963','read write',1,5,'2023-04-03 08:35:41.072963','2023-04-03 08:35:41.072963',NULL,NULL),(21,'orNABqffAo5TV6CbSPCA1xyydN0fP3','2023-04-03 18:36:28.901371','read write',1,5,'2023-04-03 08:36:28.902345','2023-04-03 08:36:28.902345',NULL,NULL),(22,'TDi8aM124pt7LL12hmlpgWTpqEgTzq','2023-04-03 18:37:23.662931','read write',1,5,'2023-04-03 08:37:23.662931','2023-04-03 08:37:23.662931',NULL,NULL),(23,'tAwPfzVkX7HxpFC51FY0HbPdWaOMgW','2023-04-03 18:39:03.439395','read write',1,5,'2023-04-03 08:39:03.439395','2023-04-03 08:39:03.439395',NULL,NULL),(24,'LAMClSUIoysqA392LDHfzKuVD6KcHX','2023-04-03 18:39:34.908342','read write',1,5,'2023-04-03 08:39:34.909349','2023-04-03 08:39:34.909349',NULL,NULL),(25,'WRwBUqZiKGLWgTx8mU0p023ApKQpdA','2023-04-03 18:39:48.102264','read write',1,5,'2023-04-03 08:39:48.103259','2023-04-03 08:39:48.103259',NULL,NULL),(26,'zW1oWUkxyGzkyCYLc7AgGJ6SHZVEe8','2023-04-03 18:40:23.270192','read write',1,3,'2023-04-03 08:40:23.272391','2023-04-03 08:40:23.272391',NULL,NULL),(27,'LeETg4DadvDytUxcvNjhwlhviEH3n3','2023-04-03 18:40:37.426253','read write',1,3,'2023-04-03 08:40:37.427256','2023-04-03 08:40:37.427256',NULL,NULL),(28,'bmT3T85qe3RtawXU3glCH3WRn3fWpR','2023-04-17 18:22:15.108337','read write',1,3,'2023-04-17 08:22:15.108337','2023-04-17 08:22:15.108337',NULL,NULL),(29,'QjgNcV9wYLApXoyt3DzF9lJtCAD66N','2023-04-17 18:22:59.419389','read write',1,3,'2023-04-17 08:22:59.420343','2023-04-17 08:22:59.420343',NULL,NULL);
 /*!40000 ALTER TABLE `oauth2_provider_accesstoken` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `oauth2_provider_application`
---
-
-DROP TABLE IF EXISTS `oauth2_provider_application`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `oauth2_provider_application` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `client_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `redirect_uris` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `client_type` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `authorization_grant_type` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `client_secret` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint DEFAULT NULL,
-  `skip_authorization` tinyint(1) NOT NULL,
-  `created` datetime(6) NOT NULL,
-  `updated` datetime(6) NOT NULL,
-  `algorithm` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `client_id` (`client_id`),
-  KEY `oauth2_provider_appl_user_id_79829054_fk_managemen` (`user_id`),
-  KEY `oauth2_provider_application_client_secret_53133678` (`client_secret`),
-  CONSTRAINT `oauth2_provider_appl_user_id_79829054_fk_managemen` FOREIGN KEY (`user_id`) REFERENCES `management_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `oauth2_provider_application`
@@ -720,36 +242,6 @@ INSERT INTO `oauth2_provider_application` VALUES (1,'bmVMP3FSd4czmQm24ARPCTjznx9
 UNLOCK TABLES;
 
 --
--- Table structure for table `oauth2_provider_grant`
---
-
-DROP TABLE IF EXISTS `oauth2_provider_grant`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `oauth2_provider_grant` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expires` datetime(6) NOT NULL,
-  `redirect_uri` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `scope` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `application_id` bigint NOT NULL,
-  `user_id` bigint NOT NULL,
-  `created` datetime(6) NOT NULL,
-  `updated` datetime(6) NOT NULL,
-  `code_challenge` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code_challenge_method` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nonce` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `claims` longtext COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT (_utf8mb3''),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `code` (`code`),
-  KEY `oauth2_provider_gran_application_id_81923564_fk_oauth2_pr` (`application_id`),
-  KEY `oauth2_provider_grant_user_id_e8f62af8_fk_management_user_id` (`user_id`),
-  CONSTRAINT `oauth2_provider_gran_application_id_81923564_fk_oauth2_pr` FOREIGN KEY (`application_id`) REFERENCES `oauth2_provider_application` (`id`),
-  CONSTRAINT `oauth2_provider_grant_user_id_e8f62af8_fk_management_user_id` FOREIGN KEY (`user_id`) REFERENCES `management_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `oauth2_provider_grant`
 --
 
@@ -757,31 +249,6 @@ LOCK TABLES `oauth2_provider_grant` WRITE;
 /*!40000 ALTER TABLE `oauth2_provider_grant` DISABLE KEYS */;
 /*!40000 ALTER TABLE `oauth2_provider_grant` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `oauth2_provider_idtoken`
---
-
-DROP TABLE IF EXISTS `oauth2_provider_idtoken`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `oauth2_provider_idtoken` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `jti` char(32) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expires` datetime(6) NOT NULL,
-  `scope` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created` datetime(6) NOT NULL,
-  `updated` datetime(6) NOT NULL,
-  `application_id` bigint DEFAULT NULL,
-  `user_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `jti` (`jti`),
-  KEY `oauth2_provider_idto_application_id_08c5ff4f_fk_oauth2_pr` (`application_id`),
-  KEY `oauth2_provider_idtoken_user_id_dd512b59_fk_management_user_id` (`user_id`),
-  CONSTRAINT `oauth2_provider_idto_application_id_08c5ff4f_fk_oauth2_pr` FOREIGN KEY (`application_id`) REFERENCES `oauth2_provider_application` (`id`),
-  CONSTRAINT `oauth2_provider_idtoken_user_id_dd512b59_fk_management_user_id` FOREIGN KEY (`user_id`) REFERENCES `management_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `oauth2_provider_idtoken`
@@ -793,39 +260,12 @@ LOCK TABLES `oauth2_provider_idtoken` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `oauth2_provider_refreshtoken`
---
-
-DROP TABLE IF EXISTS `oauth2_provider_refreshtoken`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `oauth2_provider_refreshtoken` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `access_token_id` bigint DEFAULT NULL,
-  `application_id` bigint NOT NULL,
-  `user_id` bigint NOT NULL,
-  `created` datetime(6) NOT NULL,
-  `updated` datetime(6) NOT NULL,
-  `revoked` datetime(6) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `access_token_id` (`access_token_id`),
-  UNIQUE KEY `oauth2_provider_refreshtoken_token_revoked_af8a5134_uniq` (`token`,`revoked`),
-  KEY `oauth2_provider_refr_application_id_2d1c311b_fk_oauth2_pr` (`application_id`),
-  KEY `oauth2_provider_refr_user_id_da837fce_fk_managemen` (`user_id`),
-  CONSTRAINT `oauth2_provider_refr_access_token_id_775e84e8_fk_oauth2_pr` FOREIGN KEY (`access_token_id`) REFERENCES `oauth2_provider_accesstoken` (`id`),
-  CONSTRAINT `oauth2_provider_refr_application_id_2d1c311b_fk_oauth2_pr` FOREIGN KEY (`application_id`) REFERENCES `oauth2_provider_application` (`id`),
-  CONSTRAINT `oauth2_provider_refr_user_id_da837fce_fk_managemen` FOREIGN KEY (`user_id`) REFERENCES `management_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `oauth2_provider_refreshtoken`
 --
 
 LOCK TABLES `oauth2_provider_refreshtoken` WRITE;
 /*!40000 ALTER TABLE `oauth2_provider_refreshtoken` DISABLE KEYS */;
-INSERT INTO `oauth2_provider_refreshtoken` VALUES (1,'epWC1GJfWX1CeZRqJHAG0YcP13Z0oO',1,1,12,'2023-03-30 16:50:52.830974','2023-03-30 16:50:52.830974',NULL);
+INSERT INTO `oauth2_provider_refreshtoken` VALUES (1,'epWC1GJfWX1CeZRqJHAG0YcP13Z0oO',1,1,12,'2023-03-30 16:50:52.830974','2023-03-30 16:50:52.830974',NULL),(2,'AUX3kZFZBdzXNUdB9tmHGnL34abjgZ',2,1,12,'2023-04-01 05:19:46.393930','2023-04-01 05:19:46.393930',NULL),(3,'NtM8UtGRLUmkZEw1Sws31aQmpfEheP',3,1,3,'2023-04-01 05:29:41.853216','2023-04-01 05:29:41.853216',NULL),(4,'yHcPe1OdfN7tW3SaxLMlDW7s2W5urw',4,1,5,'2023-04-01 05:45:15.015858','2023-04-01 05:45:15.015858',NULL),(5,'wnB1mabtJrJjR1qiN7EcVrOhPgm5mm',5,1,5,'2023-04-01 07:44:38.008679','2023-04-01 07:44:38.008679',NULL),(6,'oLAbEVsMjO93EwDkQTGvVIrvWTcPJ9',6,1,5,'2023-04-03 08:16:11.848457','2023-04-03 08:16:11.848457',NULL),(7,'ETd7OzmOuiOYvSBGwV2ko6CucjISHT',7,1,5,'2023-04-03 08:22:04.988662','2023-04-03 08:22:04.988662',NULL),(8,'igN9stXgNGF9MEjSacqpO9R1yOwhdT',8,1,5,'2023-04-03 08:24:10.146001','2023-04-03 08:24:10.146001',NULL),(9,'r2unyLgi3KiUmaGb7YHJy1ixpP5c0T',9,1,5,'2023-04-03 08:24:28.026932','2023-04-03 08:24:28.026932',NULL),(10,'hjPoObPngJ4Ra6eCbhZgKzX7eP7OIo',10,1,5,'2023-04-03 08:26:57.865436','2023-04-03 08:26:57.865955',NULL),(11,'eGzrDE2qIhJgz3UQ5jgfrpPIeN06Rt',11,1,5,'2023-04-03 08:27:13.089367','2023-04-03 08:27:13.089367',NULL),(12,'Vmeso1LXqn0Ff1HGHyBpRzwURH9GQ6',12,1,5,'2023-04-03 08:27:38.271780','2023-04-03 08:27:38.271780',NULL),(13,'bsihHSLATaeaTpYrIUnvLIUJtENUp5',13,1,5,'2023-04-03 08:27:51.879990','2023-04-03 08:27:51.879990',NULL),(14,'7Cgv0dFUMKwLcOsRyw7fg3KovHILxO',14,1,5,'2023-04-03 08:28:38.154322','2023-04-03 08:28:38.154322',NULL),(15,'MVkZMlDHyWI7gmHN4MZIwYP03xfKUd',15,1,5,'2023-04-03 08:28:40.103707','2023-04-03 08:28:40.103707',NULL),(16,'0qMmXaj8cdO0p5H5LUKCfGUZb8TSPu',16,1,5,'2023-04-03 08:32:04.224088','2023-04-03 08:32:04.224088',NULL),(17,'40URYqUVMJnzknmkQd0jJgnSndW0dq',17,1,5,'2023-04-03 08:34:33.049769','2023-04-03 08:34:33.049769',NULL),(18,'XN3UqOltk966UmWFq9XjWx5vfihz6l',18,1,5,'2023-04-03 08:35:28.549410','2023-04-03 08:35:28.549410',NULL),(19,'cprhrOqNia4HrKKd8GDz8naFq1wUd9',19,1,5,'2023-04-03 08:35:30.395030','2023-04-03 08:35:30.395030',NULL),(20,'mb694ZWkm1f864b73rF0TR7cyeVLik',20,1,5,'2023-04-03 08:35:41.076966','2023-04-03 08:35:41.076966',NULL),(21,'T8T4EufHWxGno4xCWPPvlZB5NLbw7t',21,1,5,'2023-04-03 08:36:28.904347','2023-04-03 08:36:28.904347',NULL),(22,'aR4yQJfnrQ3zeLEErBO9072P5Foxgg',22,1,5,'2023-04-03 08:37:23.664927','2023-04-03 08:37:23.664927',NULL),(23,'guDTWN3xmGOcthq3By6qeZXOGUkyxE',23,1,5,'2023-04-03 08:39:03.441922','2023-04-03 08:39:03.441922',NULL),(24,'9Oxf4RNF2YgHpfoZwQdH2565MO8zbN',24,1,5,'2023-04-03 08:39:34.911383','2023-04-03 08:39:34.911383',NULL),(25,'r0hPmWusBhaSOjyBrXat0ZxB6LEs1i',25,1,5,'2023-04-03 08:39:48.104821','2023-04-03 08:39:48.104821',NULL),(26,'yrJClfNk5FBvrB0aLrfWptJYzk2CIu',26,1,3,'2023-04-03 08:40:23.275464','2023-04-03 08:40:23.275464',NULL),(27,'K7fCIGa0d0NOrAZpKT1KdOJaV3i4Ox',27,1,3,'2023-04-03 08:40:37.429272','2023-04-03 08:40:37.429272',NULL),(28,'KJyQqmtiLyX5OlDY2PR3TjVKHNCVOW',28,1,3,'2023-04-17 08:22:15.130578','2023-04-17 08:22:15.130578',NULL),(29,'riDDmaUGbmmZK4o5SQJdFfgVOGjlrm',29,1,3,'2023-04-17 08:22:59.421342','2023-04-17 08:22:59.421342',NULL);
 /*!40000 ALTER TABLE `oauth2_provider_refreshtoken` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -838,4 +278,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-01 12:18:14
+-- Dump completed on 2023-04-18 14:41:03
