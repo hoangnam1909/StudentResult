@@ -1,21 +1,20 @@
+import json
+import re
+from random import randint
+
+from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 from oauth2_provider.models import get_access_token_model
 from oauth2_provider.signals import app_authorized
 from oauth2_provider.views import TokenView
-from rest_framework import viewsets, generics, parsers, permissions, status, views, response
-from rest_framework.exceptions import APIException
+from rest_framework import viewsets, generics, parsers, status
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny
 from rest_framework.views import Response
-from .models import *
+
+from .perms import *
 from .serializers import *
-from django.db import transaction, DatabaseError
-import re
-import json
-from django.core.mail import send_mail
-from random import randint
 from .utils import *
 
 
@@ -55,6 +54,17 @@ class TeacherViewSet(viewsets.ViewSet,
     model = Teacher
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
+
+    def get_permissions(self):
+        return [permissions.AllowAny()]
+
+    @action(methods=['get'], detail=False, url_path='courses')
+    def get_courses(self, request):
+        courses = Course.objects.filter(teacher__user_id=request.user.id)
+        if courses:
+            return Response(CourseSerializer(courses, many=True, context={'request': request}).data)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Error!!!"})
 
 
 class UserViewSet(viewsets.ViewSet,
@@ -102,13 +112,15 @@ class UserViewSet(viewsets.ViewSet,
         except Exception as ex:
             return Response(data=str(ex), status=status.HTTP_400_BAD_REQUEST)
 
-    @action(methods=['get', 'put'], detail=False, url_path='current-user')
+    @action(methods=['get', 'patch'], detail=False, url_path='current-user')
     def current_user(self, request):
         u = request.user
-        if request.method.__eq__('PUT'):
-            for k, v in request.data.items():
-                setattr(u, k, v)
-            u.save()
+        if request.method.__eq__('PATCH'):
+            serializer = UserSerializer(u, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(UserSerializer(u, context={'request': request}).data)
+            return Response(status=status.HTTP_400_BAD_REQUEST, data="Error!!!")
 
         return Response(UserSerializer(u, context={'request': request}).data)
 
