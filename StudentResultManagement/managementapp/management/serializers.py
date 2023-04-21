@@ -36,6 +36,20 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
 
+class UserSignUpSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        data = validated_data.copy()
+        user = User(**data)
+        user.set_password(user.password)
+        user.save()
+        return user
+
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'first_name', 'last_name',
+                  'email', 'gender', 'avatar']
+
+
 class UserCommentSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField(source='avatar')
 

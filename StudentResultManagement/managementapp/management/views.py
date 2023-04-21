@@ -81,6 +81,10 @@ class UserViewSet(viewsets.ViewSet,
 
         return [permissions.AllowAny()]
 
+    def get_serializer_class(self):
+        if self.action in ['create']:
+            return UserSignUpSerializer
+
     def create(self, request, *args, **kwargs):
         try:
             user = User()
@@ -95,20 +99,17 @@ class UserViewSet(viewsets.ViewSet,
             code_pattern = re.search(r'\d{10}', user.email)
             code = code_pattern.group(0)
 
-            user.username = code
-            user.set_password(code)
-
             send_mail('Verify your email',
                       'Code: ' + str(randint(100000, 999999)),
                       'settings.EMAIL_HOST_USER',
                       [user.email])
 
             user.save()
-            student = Student(code=code,
-                              user=user)
+            student = Student(code=code, user=user)
             student.save()
 
-            return Response(status=status.HTTP_201_CREATED)
+            return Response(status=status.HTTP_201_CREATED,
+                            data={"message": "Account registered successfully"})
         except Exception as ex:
             return Response(data=str(ex), status=status.HTTP_400_BAD_REQUEST)
 
