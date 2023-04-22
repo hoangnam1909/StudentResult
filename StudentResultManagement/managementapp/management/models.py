@@ -122,6 +122,7 @@ class Topic(BaseModel):
     title = models.CharField(max_length=255, null=False)
     content = models.TextField(null=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, default=None, related_name='topics', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

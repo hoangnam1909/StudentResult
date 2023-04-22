@@ -108,12 +108,6 @@ class MarkSerializer(serializers.ModelSerializer):
         fields = ['student', 'course', 'marks_detail']
 
 
-class TopicCommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Topic
-        fields = ['id', 'title']
-
-
 class CommentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
@@ -129,7 +123,7 @@ class CommentSerializer(serializers.ModelSerializer):
                   'user']
 
 
-class TopicSerializer(serializers.ModelSerializer):
+class TopicDetailSerializer(serializers.ModelSerializer):
     author = UserCommentSerializer()
     comments = CommentSerializer(many=True)
 
@@ -137,3 +131,18 @@ class TopicSerializer(serializers.ModelSerializer):
         model = Topic
         fields = ['id', 'title', 'content', 'created_date',
                   'updated_date', 'author', 'comments']
+
+
+class TopicCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topic
+        fields = ['id', 'title']
+
+
+class TopicSerializer(serializers.ModelSerializer):
+    author = UserCommentSerializer()
+
+    class Meta:
+        model = Topic
+        fields = ['id', 'title', 'content',
+                  'created_date', 'updated_date', 'author']

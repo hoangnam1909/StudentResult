@@ -21,7 +21,8 @@ def send_verify_email(request, user):
 
     html_content = render_to_string("email_template.html",
                                     {"title": "title ne",
-                                     "verify_link": f"http://{domain}/user/verify/?uid64={uid}&token={token}"})
+                                     "verify_link": request.build_absolute_uri(
+                                         '/user/verify/?uid64={uid}&token={token}'.format(uid=uid, token=token))})
     text_content = strip_tags(html_content)
 
     email = EmailMultiAlternatives(
@@ -32,7 +33,7 @@ def send_verify_email(request, user):
         # from email
         settings.EMAIL_HOST_USER,
         # rec list
-        ["nguyenhoangn023@gmail.com", ]
+        [user.email, ]
     )
 
     email.attach_alternative(html_content, "text/html")

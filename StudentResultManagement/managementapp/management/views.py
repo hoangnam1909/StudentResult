@@ -116,8 +116,8 @@ class UserViewSet(viewsets.ViewSet,
             user = User.objects.get(pk=3)
             send_verify_email(request, user)
             return Response(status=status.HTTP_200_OK)
-        except:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        except Exception as ex:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=ex.__str__())
 
     @action(methods=['get'], permission_classes=[permissions.AllowAny],
             detail=False, url_path='verify')
@@ -173,6 +173,12 @@ class CourseViewSet(viewsets.ViewSet,
     queryset = Course.objects.filter(active=True)
     serializer_class = CourseSerializer
 
+    @action(methods=['get'], detail=True, url_path='topics')
+    def get_topics(self, request, pk):
+        course = Course.objects.get(pk=pk)
+        return Response(TopicSerializer(course.topics, many=True, context={'request': request}).data,
+                        status=status.HTTP_200_OK)
+
 
 class MarkViewSet(viewsets.ViewSet,
                   generics.ListAPIView):
@@ -186,12 +192,16 @@ class TopicViewSet(viewsets.ViewSet,
                    generics.CreateAPIView,
                    generics.RetrieveAPIView):
     model = Topic
-    queryset = Topic.objects.filter(active=True, comments__active=True).distinct()
+    queryset = Topic.objects.filter(active=True)
     serializer_class = TopicSerializer
 
     def get_serializer_class(self):
         if self.action == 'add_comment':
             return CommentCreateSerializer
+
+        if self.action in ['retrieve', ]:
+            return TopicDetailSerializer
+
         return TopicSerializer
 
     def get_permissions(self):
@@ -210,7 +220,7 @@ class TopicViewSet(viewsets.ViewSet,
         return Response(data=comments.data,
                         status=status.HTTP_200_OK)
 
-    @action(methods=['post'], detail=True,
+    @action(methods=['post', 'patch'], detail=True,
             url_path='comments')
     def add_comment(self, request, pk):
         topic = Topic.objects.get(pk=pk)
@@ -220,21 +230,6 @@ class TopicViewSet(viewsets.ViewSet,
                     user=user,
                     topic=topic)
         c.save()
-
-        return Response(CommentSerializer(c, context={'request': request}).data,
-                        status=status.HTTP_201_CREATED)
-
-    @action(methods=['patch'], detail=True,
-            url_path='comments')
-    def update_comment(self, request, pk):
-        topic = Topic.objects.get(pk=pk)
-        user = User.objects.get(pk=request.data.get('user_id'))
-
-        c = Comment(content=request.data['content'],
-                    user=user,
-                    topic=topic)
-        topic.comments.add(c)
-        topic.save()
 
         return Response(CommentSerializer(c, context={'request': request}).data,
                         status=status.HTTP_201_CREATED)
