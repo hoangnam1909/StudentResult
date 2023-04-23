@@ -60,14 +60,37 @@ class TeacherUser(User):
 
 
 class TeacherUserAdmin(admin.ModelAdmin):
+    def get_queryset(self, *args, **kwargs):
+        return User.objects.filter(teacher__isnull=False)
+
     form = UserForm
     inlines = [TeacherInlineAdmin, ]
+
+
+# STUDENT USER
+class StudentInlineAdmin(admin.StackedInline):
+    model = Student
+    fk_name = 'user'
+    max_num = 1
+
+
+class StudentUser(User):
+    class Meta:
+        proxy = True
+
+
+class StudentUserAdmin(admin.ModelAdmin):
+    def get_queryset(self, *args, **kwargs):
+        return User.objects.filter(student__isnull=False)
+
+    form = UserForm
+    inlines = [StudentInlineAdmin, ]
 
 
 admin.site.site_header = 'Student Result Management'
 admin.site.register(User, UserAdmin)
 admin.site.register(TeacherUser, TeacherUserAdmin)
-admin.site.register(Student)
+admin.site.register(StudentUser, StudentUserAdmin)
 admin.site.register(Subject)
 admin.site.register(Faculty)
 admin.site.register(Class)

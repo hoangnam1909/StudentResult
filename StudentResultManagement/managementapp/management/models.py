@@ -23,7 +23,7 @@ class User(AbstractUser):
 
 class Teacher(models.Model):
     code = models.CharField(max_length=10, primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='teacher', default=None)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher')
 
     def __str__(self):
         return '{code} - {fullname}' \
@@ -33,7 +33,8 @@ class Teacher(models.Model):
 
 class Student(models.Model):
     code = models.CharField(max_length=10, primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student')
+
     faculty = models.ForeignKey('Faculty', on_delete=models.PROTECT, null=True)
     regular_class = models.ForeignKey('Class', on_delete=models.CASCADE, null=True)
 
