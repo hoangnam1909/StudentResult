@@ -19,6 +19,7 @@ from .perms import *
 from .serializers import *
 from .utils import *
 from .email import *
+from .paginators import *
 
 
 class CustomTokenView(TokenView):
@@ -173,17 +174,49 @@ class CourseViewSet(viewsets.ViewSet,
     queryset = Course.objects.filter(active=True)
     serializer_class = CourseSerializer
 
-    @action(methods=['get'], detail=True, url_path='topics')
-    def get_topics(self, request, pk):
-        course = Course.objects.get(pk=pk)
-        return Response(TopicSerializer(course.topics, many=True, context={'request': request}).data,
-                        status=status.HTTP_200_OK)
+    def get_serializer_class(self):
+        if self.action in ['get_topic', 'add_topic', ]:
+            return TopicSerializer
+        elif self.action == 'get_student':
+            return StudentSerializer
 
-    @action(methods=['get'], detail=True, url_path='students')
-    def get_students(self, request, pk):
-        course = Course.objects.get(pk=pk)
-        return Response(StudentSerializer(course.students, many=True, context={'request': request}).data,
-                        status=status.HTTP_200_OK)
+        return CourseSerializer
+
+    @action(methods=['get', 'post'], detail=True, url_path='topic')
+    def get_topic(self, request, pk):
+        if request.method == 'GET':
+            self.pagination_class = TopicPaginator
+            queryset = Course.objects.get(pk=pk).topics.all()
+
+            page = self.paginate_queryset(queryset)
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+        elif request.method == 'POST':
+            data = request.data
+            topic = Topic.objects.create(title=data['title'],
+                                         content=data['content'],
+                                         author_id=request.user.id,
+                                         course_id=pk)
+            serializer = TopicSerializer(topic)
+            return Response(data=serializer.data,
+                            status=status.HTTP_201_CREATED)
+
+    @action(methods=['get'], detail=True, url_path='student')
+    def get_student(self, request, pk):
+        self.pagination_class = StudentPaginator
+        queryset = Course.objects.get(pk=pk).students.all()
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class MarkViewSet(viewsets.ViewSet,
@@ -195,8 +228,7 @@ class MarkViewSet(viewsets.ViewSet,
 
 class TopicViewSet(viewsets.ViewSet,
                    generics.ListAPIView,
-                   generics.CreateAPIView,
-                   generics.RetrieveAPIView):
+                   generics.RetrieveUpdateAPIView):
     model = Topic
     queryset = Topic.objects.filter(active=True)
     serializer_class = TopicSerializer
