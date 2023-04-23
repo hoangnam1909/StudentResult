@@ -1,0 +1,573 @@
+{
+	"info": {
+		"_postman_id": "d182f185-0b6c-4128-9f57-21123a2ae63d",
+		"name": "Django",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20495476"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "bmVMP3FSd4czmQm24ARPCTjznx9oZCq7n7RwbtzD",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "Uhx00qnSua6xlLSRNmUPYvDH1kDibAssrRhSqo0m2NAYB62yr7AF28BhL04YhZ4kJxPfNF2B6wts9LuBrjocZ1Bm7C0eELsGSLTdJRSpvXcuLVKcrsChmbM7iRnAV2C7",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{8000}}/o/token/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"o",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginCustomRes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "1951052422",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1951052422",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "s1YlkjFMIYtDGvzCbXjUN4UY8W3ntiGHfBQ3PLus",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "yrhqtXtYY25Y9S0pzsHo4Eg77CBrXZ0hINk0KjHPfdCrgrEQNoPXV7KrPUqC0u2T2O2QYVhc1jME5HLVa8QdGiIh8p3xe0PeFQ2vmplctwKXDWN5PmTK5QOoP7uCa3EP",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "pbkdf2_sha256$390000$PSZFMDrrxvvTR8EPqdKsxi$bb3S7UX4BAzV5cpYXdfqFTjBxRRTQ3MhAY690K7Mp70=",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{8000}}/authenticate/token/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"authenticate",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "first_name",
+									"value": "Nguyen Hoang",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Nam",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "1951052125nam@ou.edu.vn",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "1951052422",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1951052422",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/Nam/Pictures/49914646_967707916757510_1545321635303653376_n (2).jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{8000}}/user/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "current_user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer yKAmzpdWUEYk9c4oV2aVphkgvLEmpT",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{8000}}/user/current-user/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"user",
+								"current-user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "current_user",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer bLIhTpvlnrmiNgGNXYh2HrXPvs5YCZ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "first_name",
+									"value": "Nguyen Hoangg",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{8000}}/user/current-user/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"user",
+								"current-user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send_email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{8000}}/user/verify/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"user",
+								"verify",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "faculty",
+			"item": [
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{8000}}/faculty/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"faculty",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "topic",
+			"item": [
+				{
+					"name": "get_comments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{8000}}/topic/:topic-id/comments/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"topic",
+								":topic-id",
+								"comments",
+								""
+							],
+							"variable": [
+								{
+									"key": "topic-id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_comment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer EOPtopy2jYzLbBibIWKUTQtSuA6qAa",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "content",
+									"value": "1951052422 comment1",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "9",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{8000}}/topic/:topic-id/comments/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"topic",
+								":topic-id",
+								"comments",
+								""
+							],
+							"variable": [
+								{
+									"key": "topic-id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{8000}}/topic/:id/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"topic",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Ngày nộp bài tập lớn",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "Thầy cho em hỏi khi nào thì nộp và vấn đáp bài tập lớn môn này ạ",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{8000}}/topic/:id/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"topic",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "teacher",
+			"item": [
+				{
+					"name": "get_courses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer gLtHWaTrDeI32tlettWQ4lArw42NC5",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{8000}}/teacher/courses/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"teacher",
+								"courses",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test",
+			"item": [
+				{
+					"name": "verify_test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{8000}}/user/verify-test/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"user",
+								"verify-test",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "course",
+			"item": [
+				{
+					"name": "get_topic",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{8000}}/course/:id/topic/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"course",
+								":id",
+								"topic",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_topic",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer GphHCYm5s8pz68FnQUz2eV4eYeareT",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Ngày nộp bài tập lớn",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "Thầy cho em hỏi khi nào thì nộp và vấn đáp bài tập lớn môn này ạ",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{8000}}/course/:id/topic/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"course",
+								":id",
+								"topic",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{8000}}/course/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"course",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
