@@ -109,7 +109,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `management_teacher` WRITE;
 /*!40000 ALTER TABLE `management_teacher` DISABLE KEYS */;
-INSERT INTO `management_teacher` VALUES ('123456',3);
+INSERT INTO `management_teacher` VALUES ('123456',3),('325436',4);
 /*!40000 ALTER TABLE `management_teacher` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,7 +129,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `management_user` WRITE;
 /*!40000 ALTER TABLE `management_user` DISABLE KEYS */;
-INSERT INTO `management_user` VALUES (1,'pbkdf2_sha256$390000$5KhXlt0OnnQiPb1uiDq8Gn$JtyQAbxhVD7NOTkTrzW8LjihNz7K/PYfGBCoh7fsmGQ=','2023-04-22 09:20:24.203648',1,'admin','','',1,1,'2023-04-22 09:18:41.585931','admin@gmail.com',0,''),(2,'pbkdf2_sha256$390000$lAEnUbpQNTUbOalOhFDMRb$q/PgllAeHlhPGm4vnPRRidfo5biEJSZWvaZbCMPvbug=',NULL,0,'1951052422','Nguyen Hoang','Nam',0,1,'2023-04-22 09:22:00.371401','1951052125nam@ou.edu.vn',0,'users/2023/04/49914646_967707916757510_1545321635303653376_n_2.jpg'),(3,'pbkdf2_sha256$390000$FrrGCpxCxi8LamAokQgcxV$UWTygIAbsNWLFMzJexnd66/NFhsuhZo1EqssbDE0S2w=',NULL,0,'thanh.dh','Dương Hữuu','Thành',0,1,'2023-04-22 14:50:57.912861','thanh.dh@gmail.com',0,'users/2023/04/z4198369065521_11c601c5536b76497091f5d64a41ae02.jpg');
+INSERT INTO `management_user` VALUES (1,'pbkdf2_sha256$390000$5KhXlt0OnnQiPb1uiDq8Gn$JtyQAbxhVD7NOTkTrzW8LjihNz7K/PYfGBCoh7fsmGQ=','2023-04-22 09:20:24.203648',1,'admin','','',1,1,'2023-04-22 09:18:41.585931','admin@gmail.com',0,''),(2,'pbkdf2_sha256$390000$lAEnUbpQNTUbOalOhFDMRb$q/PgllAeHlhPGm4vnPRRidfo5biEJSZWvaZbCMPvbug=',NULL,0,'1951052422','Nguyen Hoang','Nam',0,1,'2023-04-22 09:22:00.371401','1951052125nam@ou.edu.vn',0,'users/2023/04/49914646_967707916757510_1545321635303653376_n_2.jpg'),(3,'pbkdf2_sha256$390000$FrrGCpxCxi8LamAokQgcxV$UWTygIAbsNWLFMzJexnd66/NFhsuhZo1EqssbDE0S2w=',NULL,0,'thanh.dh','Dương Hữuu','Thành',0,1,'2023-04-22 14:50:57.912861','thanh.dh@gmail.com',0,'users/2023/04/z4198369065521_11c601c5536b76497091f5d64a41ae02.jpg'),(4,'phuong.lq',NULL,0,'phuong.lq','Lưu Quang','Phương',0,1,'2023-04-23 07:44:39.890850','phuong.lq@gmail.com',0,'users/2023/04/36852305_1071850716299858_5877637906780127232_n.jpg');
 /*!40000 ALTER TABLE `management_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -142,4 +142,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-23  0:13:36
+-- Dump completed on 2023-04-23 15:41:11
