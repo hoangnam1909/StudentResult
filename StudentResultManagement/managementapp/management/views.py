@@ -179,6 +179,12 @@ class CourseViewSet(viewsets.ViewSet,
         return Response(TopicSerializer(course.topics, many=True, context={'request': request}).data,
                         status=status.HTTP_200_OK)
 
+    @action(methods=['get'], detail=True, url_path='students')
+    def get_students(self, request, pk):
+        course = Course.objects.get(pk=pk)
+        return Response(StudentSerializer(course.students, many=True, context={'request': request}).data,
+                        status=status.HTTP_200_OK)
+
 
 class MarkViewSet(viewsets.ViewSet,
                   generics.ListAPIView):
