@@ -12,13 +12,26 @@ class BaseModel(models.Model):
 
 
 class User(AbstractUser):
+    class Role(models.TextChoices):
+        TEACHER = "TEACHER", "Teacher"
+        STUDENT = "STUDENT", "Student"
+        NO_ROLE = "NO_ROLE", "No Role"
+
+    base_role = Role.NO_ROLE
+
     email = models.EmailField(unique=True, null=False)
     gender = models.BooleanField(default=False)
     avatar = models.ImageField(upload_to='users/%Y/%m')
+    role = models.CharField(max_length=50, default=base_role, choices=Role.choices)
 
     def __str__(self):
         return '{username} - {email}'.format(username=super().username,
                                              email=self.email)
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.role = self.base_role
+            return super().save(*args, **kwargs)
 
 
 class Teacher(models.Model):

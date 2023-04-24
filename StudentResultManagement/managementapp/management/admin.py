@@ -19,12 +19,12 @@ class UserForm(ModelForm):
             'password': PasswordInput(),
         }
 
-    # def save(self, commit=True):
-    #     user = super(UserForm, self).save(commit=False)
-    #     user.set_password(user.username)
-    #     user.save(update_fields=['username', 'password', 'email', 'first_name',
-    #                              'last_name', 'is_active', 'gender', 'avatar'])
-    #     return user
+
+class StudentUserForm(UserForm):
+    class Meta:
+        model = UserForm.Meta.model
+        fields = UserForm.Meta.fields
+        widgets = UserForm.Meta.widgets
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -83,7 +83,7 @@ class StudentUserAdmin(admin.ModelAdmin):
     def get_queryset(self, *args, **kwargs):
         return User.objects.filter(student__isnull=False)
 
-    form = UserForm
+    form = StudentUserForm
     inlines = [StudentInlineAdmin, ]
 
 

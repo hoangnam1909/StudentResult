@@ -123,6 +123,7 @@ class UserViewSet(viewsets.ViewSet,
 
             user.set_password(user.password)
             user.is_active = False
+            user.role = User.Role.STUDENT
             user.save()
             student = Student(code=code, user=user)
             student.save()
@@ -266,24 +267,21 @@ class TopicViewSet(viewsets.ViewSet,
         return TopicSerializer
 
     def get_permissions(self):
-        if self.action in ['add_comment', 'update_comment']:
+        if self.action in ['comments']:
             return [permissions.IsAuthenticated()]
-
         return [permissions.AllowAny()]
 
-    @action(methods=['get'], detail=True,
+    @action(methods=['get', 'post', 'patch'], detail=True,
             url_path='comments')
-    def get_comments(self, request, pk):
-        topic = Topic.objects.get(pk=pk)
-        comments = CommentSerializer(topic.comments, many=True,
-                                     context={'request': request})
+    def comments(self, request, pk):
+        if request.method == 'GET':
+            topic = Topic.objects.get(pk=pk)
+            comments = CommentSerializer(topic.comments, many=True,
+                                         context={'request': request})
 
-        return Response(data=comments.data,
-                        status=status.HTTP_200_OK)
+            return Response(data=comments.data,
+                            status=status.HTTP_200_OK)
 
-    @action(methods=['post', 'patch'], detail=True,
-            url_path='comments')
-    def add_comment(self, request, pk):
         topic = Topic.objects.get(pk=pk)
         user = User.objects.get(pk=request.user.id)
 
