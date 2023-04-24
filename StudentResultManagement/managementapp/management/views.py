@@ -1,5 +1,6 @@
 import json
 import re
+from itertools import chain
 from random import randint
 
 from django.core.mail import send_mail
@@ -86,19 +87,22 @@ class UserViewSet(viewsets.ViewSet,
 
     @action(methods=['post'], detail=False, url_path='get')
     def get_specific_user(self, request):
-        data = request.data
-        username = request.POST.get('username')
         email = request.POST.get('email')
-        if username is not None:
-            user = User.objects.filter(username=data['username']).first()
-            if user:
-                return Response(status=status.HTTP_200_OK,
-                                data=UserSerializer(user, context={'request': request}).data)
-        elif email is not None:
-            user = User.objects.filter(email=data['email']).first()
-            if user:
-                return Response(status=status.HTTP_200_OK,
-                                data=UserSerializer(user, context={'request': request}).data)
+        code = request.POST.get('code')
+
+        student_user = User.objects.filter(student__code__icontains=code) \
+            .filter(email__icontains=email) \
+            .all()
+
+        teacher_user = User.objects.filter(teacher__code__icontains=code) \
+            .filter(email__icontains=email) \
+            .all()
+
+        result_list = list(chain(student_user, teacher_user))
+
+        if result_list:
+            return Response(status=status.HTTP_200_OK,
+                            data=UserSerializer(result_list, many=True, context={'request': request}).data)
 
         return Response(status=status.HTTP_404_NOT_FOUND,
                         data={"message": "Not found"})
