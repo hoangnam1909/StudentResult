@@ -84,6 +84,25 @@ class UserViewSet(viewsets.ViewSet,
             return [permissions.IsAuthenticated()]
         return [permissions.AllowAny()]
 
+    @action(methods=['post'], detail=False, url_path='get')
+    def get_specific_user(self, request):
+        data = request.data
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        if username is not None:
+            user = User.objects.filter(username=data['username']).first()
+            if user:
+                return Response(status=status.HTTP_200_OK,
+                                data=UserSerializer(user, context={'request': request}).data)
+        elif email is not None:
+            user = User.objects.filter(email=data['email']).first()
+            if user:
+                return Response(status=status.HTTP_200_OK,
+                                data=UserSerializer(user, context={'request': request}).data)
+
+        return Response(status=status.HTTP_404_NOT_FOUND,
+                        data={"message": "Not found"})
+
     def create(self, request, *args, **kwargs):
         try:
             user = User()
