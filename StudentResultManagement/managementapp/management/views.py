@@ -76,7 +76,7 @@ class TeacherViewSet(viewsets.ViewSet,
 class UserViewSet(viewsets.ViewSet,
                   generics.ListAPIView,
                   generics.CreateAPIView,
-                  generics.RetrieveUpdateAPIView):
+                  generics.UpdateAPIView):
     model = User
     queryset = User.objects.filter(is_active=True, is_superuser=False)
     serializer_class = UserSerializer
