@@ -270,7 +270,7 @@ class TopicViewSet(viewsets.ViewSet,
         return [permissions.AllowAny()]
 
     @action(methods=['get', 'post', 'patch'], detail=True,
-            url_path='comments')
+            url_path='comment')
     def comments(self, request, pk):
         if request.method == 'GET':
             topic = Topic.objects.get(pk=pk)
@@ -290,3 +290,10 @@ class TopicViewSet(viewsets.ViewSet,
 
         return Response(CommentSerializer(c, context={'request': request}).data,
                         status=status.HTTP_201_CREATED)
+
+
+class CommentViewSet(viewsets.ViewSet,
+                     generics.UpdateAPIView):
+    model = Comment
+    queryset = Comment.objects.filter(active=True)
+    serializer_class = CommentSerializer

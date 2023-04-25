@@ -89,9 +89,13 @@ class Course(BaseModel):
     students = models.ManyToManyField(Student, related_name="courses")
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = ('subject', 'course_class')
+
     def __str__(self):
-        return '{subject_code} - {class_code}' \
+        return '[{subject_code}] {subject_name} - {class_code}' \
             .format(subject_code=self.subject.id,
+                    subject_name=self.subject.name,
                     class_code=self.course_class.id)
 
 

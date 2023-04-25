@@ -12,6 +12,7 @@ r.register('class', views.ClassViewSet)
 r.register('course', views.CourseViewSet)
 r.register('mark', views.MarkViewSet)
 r.register('topic', views.TopicViewSet)
+r.register('comment', views.CommentViewSet)
 
 urlpatterns = [
     path('', include(r.urls)),
