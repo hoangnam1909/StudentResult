@@ -39,6 +39,7 @@ class CustomTokenView(TokenView):
 
                 body['user_info'] = {
                     'username': token.user.username,
+                    'role': token.user.role,
                     'image': 'http://127.0.0.1:8000/static/' + token.user.avatar.name,
                 }
                 body = json.dumps(body)
