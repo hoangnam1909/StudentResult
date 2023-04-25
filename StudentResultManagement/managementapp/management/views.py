@@ -62,6 +62,7 @@ class TeacherViewSet(viewsets.ViewSet,
 
     def get_permissions(self):
         return [permissions.AllowAny()]
+        # return [permissions.IsAuthenticated()]
 
     @action(methods=['get'], detail=False, url_path='courses')
     def get_courses(self, request):
@@ -74,7 +75,8 @@ class TeacherViewSet(viewsets.ViewSet,
 
 class UserViewSet(viewsets.ViewSet,
                   generics.ListAPIView,
-                  generics.CreateAPIView):
+                  generics.CreateAPIView,
+                  generics.RetrieveUpdateAPIView):
     model = User
     queryset = User.objects.filter(is_active=True, is_superuser=False)
     serializer_class = UserSerializer
@@ -135,14 +137,14 @@ class UserViewSet(viewsets.ViewSet,
         except Exception as ex:
             return Response(data=str(ex), status=status.HTTP_400_BAD_REQUEST)
 
-    @action(methods=['get'], detail=False, url_path='verify-test')
-    def verify_test(self, request):
-        try:
-            user = User.objects.get(pk=3)
-            send_verify_email(request, user)
-            return Response(status=status.HTTP_200_OK)
-        except Exception as ex:
-            return Response(status=status.HTTP_400_BAD_REQUEST, data=ex.__str__())
+    # @action(methods=['get'], detail=False, url_path='verify-test')
+    # def verify_test(self, request):
+    #     try:
+    #         user = User.objects.get(pk=3)
+    #         send_verify_email(request, user)
+    #         return Response(status=status.HTTP_200_OK)
+    #     except Exception as ex:
+    #         return Response(status=status.HTTP_400_BAD_REQUEST, data=ex.__str__())
 
     @action(methods=['get'], permission_classes=[permissions.AllowAny],
             detail=False, url_path='verify')
@@ -165,17 +167,13 @@ class UserViewSet(viewsets.ViewSet,
             return Response(status=status.HTTP_400_BAD_REQUEST,
                             data={"message": "Activation link is invalid!"})
 
-    @action(methods=['get', 'patch'], detail=False, url_path='current-user')
+    @action(methods=['get'], detail=False, url_path='current-user')
     def current_user(self, request):
         u = request.user
-        if request.method.__eq__('PATCH'):
-            serializer = UserSerializer(u, data=request.data, partial=True)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(UserSerializer(u, context={'request': request}).data)
-            return Response(status=status.HTTP_400_BAD_REQUEST, data="Error!!!")
-
         return Response(UserSerializer(u, context={'request': request}).data)
+
+    def get_object(self):
+        return self.request.user
 
 
 class SubjectViewSet(viewsets.ViewSet,

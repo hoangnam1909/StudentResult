@@ -25,13 +25,10 @@ class User(AbstractUser):
     role = models.CharField(max_length=50, default=base_role, choices=Role.choices)
 
     def __str__(self):
-        return '{username} - {email}'.format(username=super().username,
-                                             email=self.email)
-
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.role = self.base_role
-            return super().save(*args, **kwargs)
+        return '{fullname} - {username} - {email}' \
+            .format(fullname=self.first_name + ' ' + self.last_name,
+                    username=super().username,
+                    email=self.email)
 
 
 class Teacher(models.Model):
@@ -39,9 +36,10 @@ class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher')
 
     def __str__(self):
-        return '{code} - {fullname}' \
+        return '{code} - {fullname} - {email}' \
             .format(code=self.code,
-                    fullname=self.user.first_name + ' ' + self.user.last_name)
+                    fullname=self.user.first_name + ' ' + self.user.last_name,
+                    email=self.user.email)
 
 
 class Student(models.Model):
@@ -146,3 +144,9 @@ class Comment(BaseModel):
     content = models.TextField(null=False)
     topic = models.ForeignKey('Topic', related_name='comments', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'Topic_id {topic_id} - user_id {user_id} - {created_date}' \
+            .format(topic_id=self.topic_id,
+                    user_id=self.user_id,
+                    created_date=self.created_date)

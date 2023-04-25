@@ -14,22 +14,16 @@ class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ['username', 'password', 'email', 'first_name',
-                  'last_name', 'is_active', 'gender', 'avatar']
+                  'last_name', 'is_active', 'gender', 'role', 'avatar']
         widgets = {
             'password': PasswordInput(),
         }
 
 
-class StudentUserForm(UserForm):
-    class Meta:
-        model = UserForm.Meta.model
-        fields = UserForm.Meta.fields
-        widgets = UserForm.Meta.widgets
-
-
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['id', 'username', 'email', date_format, 'is_active']
-    list_filter = ['id', 'username', 'email', 'is_active']
+    list_display_links = ['username', 'email']
+    list_display = ['username', 'email', date_format, 'is_active', 'role']
+    list_filter = ['is_active', 'role']
     list_per_page = 25
     list_editable = ['is_active']
     search_fields = ['id', 'username', 'email', 'first_name',
@@ -44,53 +38,22 @@ class UserAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if obj.password is not None:
-            obj.set_password(request.user.password)
+            obj.set_password(obj.password)
         super().save_model(request, obj, form, change)
 
 
-class TeacherInlineAdmin(admin.StackedInline):
-    model = Teacher
-    fk_name = 'user'
-    max_num = 1
+class TeacherAdmin(admin.ModelAdmin):
+    pass
 
 
-class TeacherUser(User):
-    class Meta:
-        proxy = True
-
-
-class TeacherUserAdmin(admin.ModelAdmin):
-    def get_queryset(self, *args, **kwargs):
-        return User.objects.filter(teacher__isnull=False)
-
-    form = UserForm
-    inlines = [TeacherInlineAdmin, ]
-
-
-# STUDENT USER
-class StudentInlineAdmin(admin.StackedInline):
-    model = Student
-    fk_name = 'user'
-    max_num = 1
-
-
-class StudentUser(User):
-    class Meta:
-        proxy = True
-
-
-class StudentUserAdmin(admin.ModelAdmin):
-    def get_queryset(self, *args, **kwargs):
-        return User.objects.filter(student__isnull=False)
-
-    form = StudentUserForm
-    inlines = [StudentInlineAdmin, ]
+class StudentAdmin(admin.ModelAdmin):
+    pass
 
 
 admin.site.site_header = 'Student Result Management'
 admin.site.register(User, UserAdmin)
-admin.site.register(TeacherUser, TeacherUserAdmin)
-admin.site.register(StudentUser, StudentUserAdmin)
+admin.site.register(Teacher, TeacherAdmin)
+admin.site.register(Student, StudentAdmin)
 admin.site.register(Subject)
 admin.site.register(Faculty)
 admin.site.register(Class)
