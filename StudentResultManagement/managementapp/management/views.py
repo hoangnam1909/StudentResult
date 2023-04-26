@@ -198,7 +198,7 @@ class CourseViewSet(viewsets.ViewSet,
     serializer_class = CourseSerializer
 
     def get_serializer_class(self):
-        if self.action in ['get_topic', 'add_topic', ]:
+        if self.action in ['topic', ]:
             return TopicSerializer
         elif self.action == 'get_student':
             return StudentSerializer
@@ -206,7 +206,7 @@ class CourseViewSet(viewsets.ViewSet,
         return CourseSerializer
 
     @action(methods=['get', 'post'], detail=True, url_path='topic')
-    def get_topic(self, request, pk):
+    def topic(self, request, pk):
         if request.method == 'GET':
             self.pagination_class = TopicPaginator
             queryset = Course.objects.get(pk=pk).topics.all()
@@ -224,7 +224,8 @@ class CourseViewSet(viewsets.ViewSet,
                                          content=data['content'],
                                          author_id=request.user.id,
                                          course_id=pk)
-            serializer = TopicSerializer(topic)
+            serializer = TopicSerializer(topic,
+                                         context={'request': request})
             return Response(data=serializer.data,
                             status=status.HTTP_201_CREATED)
 
@@ -247,6 +248,8 @@ class MarkViewSet(viewsets.ViewSet,
     model = Mark
     queryset = Mark.objects.all()
     serializer_class = MarkSerializer
+
+
 
 
 class TopicViewSet(viewsets.ViewSet,
