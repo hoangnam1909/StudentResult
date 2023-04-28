@@ -42,6 +42,33 @@ class UserAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ['get_course', 'get_teacher', 'start_date', 'end_date']
+    list_filter = ['start_date', 'end_date', 'is_locked', 'result_status']
+    list_per_page = 15
+    search_fields = ['subject__name',
+                     'course_class__id',
+                     'teacher__user__first_name', 'teacher__user__last_name']
+
+    def get_course(self, obj):
+        return '[{subject_code}] {subject_name} - {class_code}' \
+            .format(subject_code=obj.subject.id,
+                    subject_name=obj.subject.name,
+                    class_code=obj.course_class.id)
+
+    get_course.short_description = 'Course'
+    get_course.admin_order_field = 'subject'
+
+    def get_teacher(self, obj):
+        return '{fullname} - {email}' \
+            .format(fullname=obj.teacher.user.first_name + ' ' + obj.teacher.user.last_name,
+                    email=obj.teacher.user.email)
+
+    get_teacher.short_description = 'Teacher'
+    get_teacher.admin_order_field = 'course__teacher'
+    get_teacher.admin_search_field = 'course__teacher'
+
+
 class TeacherAdmin(admin.ModelAdmin):
     pass
 
@@ -57,7 +84,7 @@ admin.site.register(Student, StudentAdmin)
 admin.site.register(Subject)
 admin.site.register(Faculty)
 admin.site.register(Class)
-admin.site.register(Course)
+admin.site.register(Course, CourseAdmin)
 admin.site.register(Mark)
 admin.site.register(MarkDetail)
 admin.site.register(Topic)

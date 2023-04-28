@@ -82,12 +82,20 @@ class Class(BaseModel):
 
 
 class Course(BaseModel):
+    class Status(models.TextChoices):
+        DRAFT = "DRAFT", "Draft"
+        DONE = "DONE", "Done"
+
+    bae_status = Status.DRAFT
+
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     subject = models.ForeignKey(Subject, related_name='courses', on_delete=models.CASCADE)
     course_class = models.ForeignKey(Class, on_delete=models.CASCADE)
     students = models.ManyToManyField(Student, related_name="courses")
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    is_locked = models.BooleanField(default=False)
+    result_status = models.CharField(max_length=50, default=bae_status, choices=Status.choices)
 
     class Meta:
         unique_together = ('subject', 'course_class')
@@ -100,8 +108,8 @@ class Course(BaseModel):
 
 
 class Mark(BaseModel):
-    student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    course = models.ForeignKey('Course', on_delete=models.CASCADE)
+    student = models.OneToOneField('Student', on_delete=models.CASCADE)
+    course = models.OneToOneField('Course', on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('student', 'course')

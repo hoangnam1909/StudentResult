@@ -1,10 +1,11 @@
 import json
 import re
+from collections import namedtuple
 from itertools import chain
 from random import randint
 
 from django.core.mail import send_mail
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.encoding import force_str
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
@@ -15,6 +16,7 @@ from rest_framework import viewsets, generics, parsers, status
 from rest_framework.decorators import action
 from rest_framework.views import Response
 from django.utils.http import urlsafe_base64_decode
+from rest_framework.renderers import TemplateHTMLRenderer
 
 from .perms import *
 from .serializers import *
@@ -88,27 +90,20 @@ class UserViewSet(viewsets.ViewSet,
             return [permissions.IsAuthenticated()]
         return [permissions.AllowAny()]
 
-    @action(methods=['post'], detail=False, url_path='get')
-    def get_specific_user(self, request):
-        email = request.POST.get('email')
-        code = request.POST.get('code')
+    def get_queryset(self):
+        queryset = User.objects.all()
+        email = self.request.query_params.get('email')
+        if email is not None:
+            queryset = queryset.filter(email__icontains=email)
 
-        student_user = User.objects.filter(student__code__icontains=code) \
-            .filter(email__icontains=email) \
-            .all()
+        code = self.request.query_params.get('code')
+        if code is not None:
+            student_user = queryset.filter(student__code__icontains=code)
+            teacher_user = queryset.filter(teacher__code__icontains=code)
 
-        teacher_user = User.objects.filter(teacher__code__icontains=code) \
-            .filter(email__icontains=email) \
-            .all()
+            queryset = list(chain(student_user, teacher_user))
 
-        result_list = list(chain(student_user, teacher_user))
-
-        if result_list:
-            return Response(status=status.HTTP_200_OK,
-                            data=UserSerializer(result_list, many=True, context={'request': request}).data)
-
-        return Response(status=status.HTTP_404_NOT_FOUND,
-                        data={"message": "Not found"})
+        return queryset
 
     def create(self, request, *args, **kwargs):
         try:
@@ -147,6 +142,12 @@ class UserViewSet(viewsets.ViewSet,
     #     except Exception as ex:
     #         return Response(status=status.HTTP_400_BAD_REQUEST, data=ex.__str__())
 
+    # @action(methods=['get'], detail=False, url_path='template')
+    # def template_test(self, request):
+    #     self.renderer_classes = [TemplateHTMLRenderer]
+    #     self.template_name = 'profile_list.html'
+    #     return Response({'name': 'hoang nam'})
+
     @action(methods=['get'], permission_classes=[permissions.AllowAny],
             detail=False, url_path='verify')
     def verify(self, request):
@@ -165,8 +166,9 @@ class UserViewSet(viewsets.ViewSet,
             return Response(status=status.HTTP_200_OK,
                             data={"message": "You have successfully verified account"})
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST,
-                            data={"message": "Activation link is invalid!"})
+            return HttpResponseRedirect('https://google.com')
+            # return Response(status=status.HTTP_400_BAD_REQUEST,
+            #                 data={"message": "Activation link is invalid!"})
 
     @action(methods=['get'], detail=False, url_path='current-user')
     def current_user(self, request):
@@ -250,8 +252,6 @@ class MarkViewSet(viewsets.ViewSet,
     serializer_class = MarkSerializer
 
 
-
-
 class TopicViewSet(viewsets.ViewSet,
                    generics.ListAPIView,
                    generics.RetrieveUpdateAPIView):
@@ -297,7 +297,23 @@ class TopicViewSet(viewsets.ViewSet,
 
 
 class CommentViewSet(viewsets.ViewSet,
+                     generics.CreateAPIView,
                      generics.UpdateAPIView):
     model = Comment
     queryset = Comment.objects.filter(active=True)
     serializer_class = CommentSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, many=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(methods=['post'], detail=False, url_path='test')
+    def test(self, request):
+        data = request.data
+        object_name = namedtuple("ObjectName", data.keys())(*data.values())
+        print(object_name)
+        print(object_name.person)
+        return Response(status=status.HTTP_200_OK, data=object_name.id)
+        # return Response(status=status.HTTP_200_OK, data=object_name.person[0].get('Name'))
