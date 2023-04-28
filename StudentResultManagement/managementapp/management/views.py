@@ -91,6 +91,10 @@ class UserViewSet(viewsets.ViewSet,
         return [permissions.AllowAny()]
 
     def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
         queryset = User.objects.all()
         email = self.request.query_params.get('email')
         if email is not None:
@@ -104,6 +108,28 @@ class UserViewSet(viewsets.ViewSet,
             queryset = list(chain(student_user, teacher_user))
 
         return queryset
+
+    @action(methods=['post'], detail=False, url_path='specific-user')
+    def get_specific_user(self, request):
+        queryset = User.objects.all()
+
+        email = request.POST.get('email')
+        if email is not None:
+            queryset = queryset.filter(email__icontains=email)
+
+        code = request.POST.get('code')
+        if code is not None:
+            student_user = queryset.filter(student__code__icontains=code)
+            teacher_user = queryset.filter(teacher__code__icontains=code)
+
+            queryset = list(chain(student_user, teacher_user))
+
+        if queryset:
+            return Response(status=status.HTTP_200_OK,
+                            data=UserSerializer(queryset, many=True, context={'request': request}).data)
+
+        return Response(status=status.HTTP_404_NOT_FOUND,
+                        data={"message": "Not found"})
 
     def create(self, request, *args, **kwargs):
         try:
