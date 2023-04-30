@@ -82,6 +82,14 @@ class CourseSerializer(serializers.ModelSerializer):
                   'subject', 'course_class', 'teacher']
 
 
+class StudentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False)
+
+    class Meta:
+        model = Student
+        fields = ['code', 'user']
+
+
 # MARK SERIALIZER
 class UserMarkSerializer(serializers.ModelSerializer):
     class Meta:
@@ -95,14 +103,6 @@ class CourseMarkSerializer(serializers.ModelSerializer):
         fields = ['id']
 
 
-class StudentSerializer(serializers.ModelSerializer):
-    user = UserMarkSerializer(many=False)
-
-    class Meta:
-        model = Teacher
-        fields = ['code', 'user']
-
-
 class MarkDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = MarkDetail
@@ -113,7 +113,7 @@ class StudentMarkSerializer(serializers.ModelSerializer):
     user = UserMarkSerializer(many=False)
 
     class Meta:
-        model = Teacher
+        model = Student
         fields = ['code', 'user']
 
 
