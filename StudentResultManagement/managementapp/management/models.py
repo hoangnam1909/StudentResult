@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -108,11 +109,8 @@ class Course(BaseModel):
 
 
 class Mark(BaseModel):
-    student = models.OneToOneField('Student', on_delete=models.CASCADE)
-    course = models.OneToOneField('Course', on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = ('student', 'course')
+    student = models.ForeignKey('Student', on_delete=models.CASCADE, related_name='mark')
+    course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='mark')
 
     def __str__(self):
         return '[{subject_code} - {class_code}] [{student_id} - {student_fullname}]' \
@@ -128,8 +126,9 @@ class MarkDetail(BaseModel):
     value = models.FloatField(default=0)
     mark = models.ForeignKey('Mark', related_name='marks_detail', on_delete=models.CASCADE)
 
-    class Meta:
-        unique_together = ('is_midterm', 'is_final')
+    def clean(self):
+        if self.is_midterm == self.is_final:
+            raise ValidationError('is_midterm and is_final should be different.')
 
     def __str__(self):
         mark_type = ''

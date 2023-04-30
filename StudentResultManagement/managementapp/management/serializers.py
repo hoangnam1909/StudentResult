@@ -57,16 +57,6 @@ class ClassSerializer(serializers.ModelSerializer):
         fields = ['id', 'faculty']
 
 
-class StudentSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False)
-    faculty = FacultySerializer(many=False)
-    regular_class = ClassSerializer(many=False)
-
-    class Meta:
-        model = Teacher
-        fields = ['code', 'user', 'faculty', 'regular_class']
-
-
 class TeacherSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False)
 
@@ -92,20 +82,58 @@ class CourseSerializer(serializers.ModelSerializer):
                   'subject', 'course_class', 'teacher']
 
 
+# MARK SERIALIZER
+class UserMarkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name']
+
+
+class CourseMarkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ['id']
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    user = UserMarkSerializer(many=False)
+
+    class Meta:
+        model = Teacher
+        fields = ['code', 'user']
+
+
 class MarkDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = MarkDetail
         fields = ['is_midterm', 'is_final', 'value']
 
 
-class MarkSerializer(serializers.ModelSerializer):
-    student = StudentSerializer(many=False)
+class StudentMarkSerializer(serializers.ModelSerializer):
+    user = UserMarkSerializer(many=False)
+
+    class Meta:
+        model = Teacher
+        fields = ['code', 'user']
+
+
+# class MarkSerializer(serializers.ModelSerializer):
+#     student = StudentMarkSerializer(many=False)
+#     course = CourseSerializer(many=False)
+#     mark_detail = MarkDetailSerializer(many=True)
+#
+#     class Meta:
+#         model = Mark
+#         fields = ['student', 'course', 'mark_detail']
+
+
+class ListMarkSerializer(serializers.ModelSerializer):
+    student = StudentMarkSerializer(many=False)
     marks_detail = MarkDetailSerializer(many=True)
-    course = CourseSerializer(many=False)
 
     class Meta:
         model = Mark
-        fields = ['student', 'course', 'marks_detail']
+        fields = ['student', 'marks_detail']
 
 
 class CommentCreateSerializer(serializers.ModelSerializer):

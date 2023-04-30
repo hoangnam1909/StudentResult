@@ -189,10 +189,11 @@ class UserViewSet(viewsets.ViewSet,
         if user is not None and account_activation_token.check_token(user, token):
             user.is_active = True
             user.save()
-            return Response(status=status.HTTP_200_OK,
-                            data={"message": "You have successfully verified account"})
+            return HttpResponseRedirect(settings.FRONT_END_HOST + '/verify/success/')
+            # return Response(status=status.HTTP_200_OK,
+            #                 data={"message": "You have successfully verified account"})
         else:
-            return HttpResponseRedirect('https://google.com')
+            return HttpResponseRedirect(settings.FRONT_END_HOST + '/verify/failed/')
             # return Response(status=status.HTTP_400_BAD_REQUEST,
             #                 data={"message": "Activation link is invalid!"})
 
@@ -228,7 +229,7 @@ class CourseViewSet(viewsets.ViewSet,
     def get_serializer_class(self):
         if self.action in ['topic', ]:
             return TopicSerializer
-        elif self.action == 'get_student':
+        elif self.action in ['get_student', ]:
             return StudentSerializer
 
         return CourseSerializer
@@ -270,12 +271,19 @@ class CourseViewSet(viewsets.ViewSet,
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
+    @action(methods=['get'], detail=True, url_path='mark')
+    def get_mark(self, request, pk):
+        mark = Mark.objects.filter(course_id=pk)
+        return Response(data={'course_id': pk,
+                              'mark_data': ListMarkSerializer(mark, many=True).data},
+                        status=status.HTTP_200_OK)
 
-class MarkViewSet(viewsets.ViewSet,
-                  generics.ListAPIView):
-    model = Mark
-    queryset = Mark.objects.all()
-    serializer_class = MarkSerializer
+
+# class MarkViewSet(viewsets.ViewSet,
+#                   generics.ListAPIView):
+#     model = Mark
+#     queryset = Mark.objects.all()
+#     serializer_class = MarkSerializer
 
 
 class TopicViewSet(viewsets.ViewSet,
@@ -341,5 +349,5 @@ class CommentViewSet(viewsets.ViewSet,
         object_name = namedtuple("ObjectName", data.keys())(*data.values())
         print(object_name)
         print(object_name.person)
-        return Response(status=status.HTTP_200_OK, data=object_name.id)
-        # return Response(status=status.HTTP_200_OK, data=object_name.person[0].get('Name'))
+        print(object_name.person[2].get('Name'))
+        return Response(status=status.HTTP_200_OK, data=object_name.person[2].get('Name'))

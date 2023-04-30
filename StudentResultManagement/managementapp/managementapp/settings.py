@@ -156,9 +156,9 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CLIENT_ID = 's1YlkjFMIYtDGvzCbXjUN4UY8W3ntiGHfBQ3PLus'
+CLIENT_ID = 'nndcTyE43GNLxlcRNGTrxeOi57KRsBDAUTn9QsOW'
 
-CLIENT_SECRET = 'yrhqtXtYY25Y9S0pzsHo4Eg77CBrXZ0hINk0KjHPfdCrgrEQNoPXV7KrPUqC0u2T2O2QYVhc1jME5HLVa8QdGiIh8p3xe0PeFQ2vmplctwKXDWN5PmTK5QOoP7uCa3EP'
+CLIENT_SECRET = 'f2cBOf37boDpaF3bwsGyaFDRkAmJYCP5z73bVneOWIadvRDuLkmrOFkhGA5IFaHChSNdD2XiPveH2KF8taZxJIW5g9IBVgkhYbCXRehQ2zbuLB3BtUAYVC00SkeewABr'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -166,6 +166,8 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'nguyenhoangnam023@gmail.com'
 EMAIL_HOST_PASSWORD = 'vywexzibggzbqhnm'
+
+FRONT_END_HOST = 'localhost:5173'
 
 INTERNAL_IPS = [
     '127.0.0.1'
