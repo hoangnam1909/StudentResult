@@ -1,3 +1,4 @@
+import io
 import json
 import re
 from collections import namedtuple
@@ -14,6 +15,7 @@ from oauth2_provider.signals import app_authorized
 from oauth2_provider.views import TokenView
 from rest_framework import viewsets, generics, parsers, status
 from rest_framework.decorators import action
+from rest_framework.parsers import JSONParser
 from rest_framework.views import Response
 from django.utils.http import urlsafe_base64_decode
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -271,12 +273,39 @@ class CourseViewSet(viewsets.ViewSet,
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-    @action(methods=['get'], detail=True, url_path='mark')
+    @action(methods=['get', 'post'], detail=True, url_path='mark')
     def get_mark(self, request, pk):
-        mark = Mark.objects.filter(course_id=pk)
-        return Response(data={'course_id': pk,
-                              'mark_data': ListMarkSerializer(mark, many=True).data},
-                        status=status.HTTP_200_OK)
+        if request.method == 'GET':
+            mark = Mark.objects.filter(course_id=pk).all()
+            return Response(data={'course_id': pk,
+                                  'mark': ListMarkSerializer(mark, many=True).data},
+                            status=status.HTTP_200_OK)
+
+        if request.method == 'POST':
+            data = request.data
+            object_name = namedtuple("ObjectName", data.keys())(*data.values())
+            # print(object_name)
+            print('course_id = ' + object_name.course_id)
+            mark = object_name.mark
+            for m in mark:
+                # print('id' + str(m.get('id')))
+                # print(m.get('marks_detail'))
+                if len(m.get('marks_detail')) > 5:
+                    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+                for md in m.get('marks_detail'):
+                    # print('md id' + str(md.get('id')))
+                    # print('student' + str(md.get('student')))
+                    if md.get('id') > 0:
+                        MarkDetail.objects.filter(id=md.get('id')).update(value=md.get('value'))
+                    else:
+                        new_mark_detail = MarkDetail(mark_id=m.get('id'),
+                                                     is_final=md.get('is_final'),
+                                                     is_midterm=md.get('is_midterm'),
+                                                     value=md.get('value'))
+                        new_mark_detail.save()
+
+            return Response(status=status.HTTP_200_OK)
 
 
 # class MarkViewSet(viewsets.ViewSet,
