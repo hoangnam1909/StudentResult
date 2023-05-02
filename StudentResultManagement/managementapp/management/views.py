@@ -310,7 +310,10 @@ class CourseViewSet(viewsets.ViewSet,
                 for index in list_mark_detail_id:
                     MarkDetail.objects.get(pk=index).delete()
 
-            return Response(status=status.HTTP_200_OK)
+            mark = Mark.objects.filter(course_id=pk).all()
+            return Response(data={'course_id': pk,
+                                  'mark_list': ListMarkSerializer(mark, many=True).data},
+                            status=status.HTTP_200_OK)
 
 
 # class MarkViewSet(viewsets.ViewSet,
