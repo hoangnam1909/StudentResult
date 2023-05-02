@@ -278,7 +278,7 @@ class CourseViewSet(viewsets.ViewSet,
         if request.method == 'GET':
             mark = Mark.objects.filter(course_id=pk).all()
             return Response(data={'course_id': pk,
-                                  'mark': ListMarkSerializer(mark, many=True).data},
+                                  'mark_list': ListMarkSerializer(mark, many=True).data},
                             status=status.HTTP_200_OK)
 
         if request.method == 'POST':
@@ -286,7 +286,7 @@ class CourseViewSet(viewsets.ViewSet,
             object_name = namedtuple("ObjectName", data.keys())(*data.values())
             # print(object_name)
             print('course_id = ' + object_name.course_id)
-            mark = object_name.mark
+            mark = object_name.mark_list
             for m in mark:
                 # print('id' + str(m.get('id')))
                 # print(m.get('marks_detail'))
