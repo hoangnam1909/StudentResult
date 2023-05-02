@@ -284,26 +284,31 @@ class CourseViewSet(viewsets.ViewSet,
         if request.method == 'POST':
             data = request.data
             object_name = namedtuple("ObjectName", data.keys())(*data.values())
-            # print(object_name)
-            print('course_id = ' + object_name.course_id)
             mark = object_name.mark_list
             for m in mark:
-                # print('id' + str(m.get('id')))
-                # print(m.get('marks_detail'))
-                if len(m.get('marks_detail')) > 5:
-                    return Response(status=status.HTTP_400_BAD_REQUEST)
+                if len(m.get('marks_detail')) > 6:
+                    return Response(status=status.HTTP_400_BAD_REQUEST,
+                                    data={'message': 'Do not enter more than 5 columns of midterm scores'})
+                list_mark_detail_id = MarkDetail.objects.filter(mark_id=m.get('id')).values_list('id', flat=True)
+                list_mark_detail_id = list(list_mark_detail_id)
+
+                print('mark detail id =' + str(list_mark_detail_id))
 
                 for md in m.get('marks_detail'):
-                    # print('md id' + str(md.get('id')))
-                    # print('student' + str(md.get('student')))
-                    if md.get('id') > 0:
-                        MarkDetail.objects.filter(id=md.get('id')).update(value=md.get('value'))
+                    mark_detail_id = md.get('id')
+                    if mark_detail_id > 0:
+                        if mark_detail_id in list_mark_detail_id:
+                            MarkDetail.objects.filter(id=mark_detail_id).update(value=md.get('value'))
+                            list_mark_detail_id.remove(mark_detail_id)
                     else:
                         new_mark_detail = MarkDetail(mark_id=m.get('id'),
                                                      is_final=md.get('is_final'),
                                                      is_midterm=md.get('is_midterm'),
                                                      value=md.get('value'))
                         new_mark_detail.save()
+
+                for index in list_mark_detail_id:
+                    MarkDetail.objects.get(pk=index).delete()
 
             return Response(status=status.HTTP_200_OK)
 
