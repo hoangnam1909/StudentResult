@@ -16,15 +16,20 @@ from oauth2_provider.views import TokenView
 from rest_framework import viewsets, generics, parsers, status
 from rest_framework.decorators import action
 from rest_framework.parsers import JSONParser
-from rest_framework.views import Response
+from rest_framework.views import Response, APIView
 from django.utils.http import urlsafe_base64_decode
 from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.permissions import *
+from django.views.generic.detail import DetailView
+from django.views import View
 
 from .perms import *
 from .serializers import *
 from .utils import *
 from .email import *
 from .paginators import *
+
+from django.db import connection
 
 
 class CustomTokenView(TokenView):
@@ -66,8 +71,8 @@ class TeacherViewSet(viewsets.ViewSet,
     serializer_class = TeacherSerializer
 
     def get_permissions(self):
-        return [permissions.AllowAny()]
-        # return [permissions.IsAuthenticated()]
+        return [AllowAny()]
+        # return [IsAuthenticated()]
 
     @action(methods=['get'], detail=False, url_path='courses')
     def get_courses(self, request):
@@ -89,8 +94,8 @@ class UserViewSet(viewsets.ViewSet,
 
     def get_permissions(self):
         if self.action in ['current_user']:
-            return [permissions.IsAuthenticated()]
-        return [permissions.AllowAny()]
+            return [IsAuthenticated()]
+        return [AllowAny()]
 
     def get_queryset(self):
         """
@@ -176,7 +181,7 @@ class UserViewSet(viewsets.ViewSet,
     #     self.template_name = 'profile_list.html'
     #     return Response({'name': 'hoang nam'})
 
-    @action(methods=['get'], permission_classes=[permissions.AllowAny],
+    @action(methods=['get'], permission_classes=[AllowAny],
             detail=False, url_path='verify')
     def verify(self, request):
         try:
@@ -227,20 +232,35 @@ class CourseViewSet(viewsets.ViewSet,
     model = Course
     queryset = Course.objects.filter(active=True)
     serializer_class = CourseSerializer
+    permission_classes = [IsAuthenticated, ]
 
     def get_serializer_class(self):
         if self.action in ['topic', ]:
             return TopicSerializer
         elif self.action in ['get_student', ]:
             return StudentSerializer
-
         return CourseSerializer
+
+    def list(self, request, *args, **kwargs):
+        user = request.user
+        if user.role == User.Role.TEACHER:
+            queryset = Course.objects.filter(teacher=user.teacher).all()
+
+        if user.role == User.Role.STUDENT:
+            queryset = Course.objects.filter(students__code=user.student.code).all()
+
+        serializer = self.get_serializer(queryset, many=True)
+        print(len(connection.queries))
+        return Response(serializer.data)
 
     @action(methods=['get', 'post'], detail=True, url_path='topic')
     def topic(self, request, pk):
+        self.permission_classes = [CourseTopicPermission, ]
+        self.get_object()
+
         if request.method == 'GET':
             self.pagination_class = TopicPaginator
-            queryset = Course.objects.get(pk=pk).topics.all()
+            queryset = self.get_object().topics.all()
 
             page = self.paginate_queryset(queryset)
             if page is not None:
@@ -262,8 +282,9 @@ class CourseViewSet(viewsets.ViewSet,
 
     @action(methods=['get'], detail=True, url_path='student')
     def get_student(self, request, pk):
+        self.permission_classes = [CourseStudentPermission, ]
         self.pagination_class = StudentPaginator
-        queryset = Course.objects.get(pk=pk).students.all()
+        queryset = self.get_object().students.all()
 
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -275,8 +296,16 @@ class CourseViewSet(viewsets.ViewSet,
 
     @action(methods=['get', 'post'], detail=True, url_path='mark')
     def get_mark(self, request, pk):
+        self.permission_classes = [CourseOwner, ]
+        course = self.get_object()
+        if not course.locked:
+            return Response(status=status.HTTP_400_BAD_REQUEST,
+                            data={'message': "The course is still in the registration period, "
+                                             "cannot enter grades at this time"})
+
         if request.method == 'GET':
             mark = Mark.objects.filter(course_id=pk).all()
+            print(len(connection.queries))
             return Response(data={'course_id': pk,
                                   'mark_list': ListMarkSerializer(mark, many=True).data},
                             status=status.HTTP_200_OK)
@@ -291,8 +320,6 @@ class CourseViewSet(viewsets.ViewSet,
                                     data={'message': 'Do not enter more than 5 columns of midterm scores'})
                 list_mark_detail_id = MarkDetail.objects.filter(mark_id=m.get('id')).values_list('id', flat=True)
                 list_mark_detail_id = list(list_mark_detail_id)
-
-                print('mark detail id =' + str(list_mark_detail_id))
 
                 for md in m.get('marks_detail'):
                     mark_detail_id = md.get('id')
@@ -311,6 +338,7 @@ class CourseViewSet(viewsets.ViewSet,
                     MarkDetail.objects.get(pk=index).delete()
 
             mark = Mark.objects.filter(course_id=pk).all()
+            print(len(connection.queries))
             return Response(data={'course_id': pk,
                                   'mark_list': ListMarkSerializer(mark, many=True).data},
                             status=status.HTTP_200_OK)
@@ -341,8 +369,8 @@ class TopicViewSet(viewsets.ViewSet,
 
     def get_permissions(self):
         if self.action in ['comments']:
-            return [permissions.IsAuthenticated()]
-        return [permissions.AllowAny()]
+            return [IsAuthenticated()]
+        return [AllowAny()]
 
     @action(methods=['get', 'post', 'patch'], detail=True,
             url_path='comment')

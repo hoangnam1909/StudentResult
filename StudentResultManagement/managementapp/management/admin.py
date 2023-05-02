@@ -42,9 +42,17 @@ class UserAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
+class CourseForm(ModelForm):
+    class Meta:
+        model = Course
+        fields = ['subject', 'course_class', 'teacher', 'start_date', 'end_date',
+                  'students', 'active', 'locked', 'result_status']
+
+
 class CourseAdmin(admin.ModelAdmin):
+    form = CourseForm
     list_display = ['get_course', 'get_teacher', 'start_date', 'end_date']
-    list_filter = ['start_date', 'end_date', 'is_locked', 'result_status']
+    list_filter = ['start_date', 'end_date', 'locked', 'result_status']
     list_per_page = 15
     search_fields = ['subject__name',
                      'course_class__id',
