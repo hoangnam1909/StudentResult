@@ -227,6 +227,22 @@ class ClassViewSet(viewsets.ViewSet,
     serializer_class = ClassSerializer
 
 
+class StudentViewSet(viewsets.ViewSet):
+    model = Student
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    permission_classes = [StudentUser, ]
+
+    @action(methods=['get'], detail=False, url_path='mark')
+    def get_mark(self, request):
+        user = request.user
+        mark = Mark.objects.filter(student_id=user.student.code)
+
+        serializer = StudentListMarkSerializer(mark, many=True)
+        return Response(status=status.HTTP_200_OK,
+                        data=serializer.data)
+
+
 class CourseViewSet(viewsets.ViewSet,
                     generics.ListAPIView):
     model = Course

@@ -7,7 +7,7 @@ import re
 class FacultySerializer(serializers.ModelSerializer):
     class Meta:
         model = Faculty
-        fields = ['id', 'name', 'created_date', 'updated_date']
+        fields = ['id', 'name']
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -90,7 +90,7 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = ['code', 'user']
 
 
-# MARK SERIALIZER
+# =================== MARK SERIALIZER
 class UserMarkSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -98,9 +98,12 @@ class UserMarkSerializer(serializers.ModelSerializer):
 
 
 class CourseMarkSerializer(serializers.ModelSerializer):
+    subject = SubjectSerializer(many=False)
+    course_class = ClassSerializer(many=False)
+
     class Meta:
         model = Course
-        fields = ['id']
+        fields = ['id', 'subject', 'course_class']
 
 
 class MarkDetailSerializer(serializers.ModelSerializer):
@@ -117,14 +120,13 @@ class StudentMarkSerializer(serializers.ModelSerializer):
         fields = ['code', 'user']
 
 
-# class MarkSerializer(serializers.ModelSerializer):
-#     student = StudentMarkSerializer(many=False)
-#     course = CourseSerializer(many=False)
-#     mark_detail = MarkDetailSerializer(many=True)
-#
-#     class Meta:
-#         model = Mark
-#         fields = ['student', 'course', 'mark_detail']
+class StudentListMarkSerializer(serializers.ModelSerializer):
+    course = CourseMarkSerializer()
+    marks_detail = MarkDetailSerializer(many=True)
+
+    class Meta:
+        model = Mark
+        fields = ['id', 'course', 'marks_detail', 'mark_s4', 'mark_s10']
 
 
 class ListMarkSerializer(serializers.ModelSerializer):
