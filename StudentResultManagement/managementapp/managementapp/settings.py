@@ -167,7 +167,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'nguyenhoangnam023@gmail.com'
 EMAIL_HOST_PASSWORD = 'vywexzibggzbqhnm'
 
-FRONT_END_HOST = 'localhost:5173'
+FRONT_END_HOST = 'http://localhost:5173'
 
 INTERNAL_IPS = [
     '127.0.0.1'
