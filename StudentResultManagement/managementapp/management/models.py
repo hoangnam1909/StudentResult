@@ -87,7 +87,7 @@ class Course(BaseModel):
         DRAFT = "DRAFT", "Draft"
         DONE = "DONE", "Done"
 
-    bae_status = Status.DRAFT
+    base_status = Status.DRAFT
 
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
@@ -96,17 +96,20 @@ class Course(BaseModel):
     students = models.ManyToManyField(Student, related_name="courses")
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     locked = models.BooleanField(default=False)
-    result_status = models.CharField(max_length=50, default=bae_status, choices=Status.choices)
+    result_status = models.CharField(max_length=50, default=base_status, choices=Status.choices)
 
     class Meta:
         unique_together = ('subject', 'course_class')
 
     def save(self, *args, **kwargs):
+        print('not lock')
         if self.locked:
+            print('locked')
             for student in self.students.all():
                 mark = Mark(student_id=student.code,
                             course_id=self.id)
                 mark.save()
+        super(Course, self).save(*args, **kwargs)
 
     def __str__(self):
         return '[{subject_code}] {subject_name} - {class_code}' \

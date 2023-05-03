@@ -46,7 +46,7 @@ class CourseForm(ModelForm):
     class Meta:
         model = Course
         fields = ['subject', 'course_class', 'teacher', 'start_date', 'end_date',
-                  'students', 'active', 'locked', 'result_status']
+                  'students', 'active', 'locked', 'result_status', ]
 
 
 class CourseAdmin(admin.ModelAdmin):
