@@ -298,14 +298,17 @@ class CourseViewSet(viewsets.ViewSet,
     def get_mark(self, request, pk):
         self.permission_classes = [CourseOwner, ]
         course = self.get_object()
-        if not course.locked:
-            return Response(status=status.HTTP_400_BAD_REQUEST,
-                            data={'message': "The course is still in the registration period, "
-                                             "cannot enter grades at this time"})
+        students_code = course.students.all()
+        students_code = students_code.values_list('code', flat=True)
+        print(students_code)
+        for code in students_code:
+            if not Mark.objects.filter(course_id=pk).filter(student_id=code).exists():
+                mark = Mark(course_id=pk, student_id=code)
+                mark.save()
 
         if request.method == 'GET':
             mark = Mark.objects.filter(course_id=pk).all()
-            print(len(connection.queries))
+            print('query counter = ' + str(len(connection.queries)))
             return Response(data={'course_id': pk,
                                   'mark_list': ListMarkSerializer(mark, many=True).data},
                             status=status.HTTP_200_OK)
@@ -338,7 +341,7 @@ class CourseViewSet(viewsets.ViewSet,
                     MarkDetail.objects.get(pk=index).delete()
 
             mark = Mark.objects.filter(course_id=pk).all()
-            print(len(connection.queries))
+            print('query counter = ' + str(len(connection.queries)))
             return Response(data={'course_id': pk,
                                   'mark_list': ListMarkSerializer(mark, many=True).data},
                             status=status.HTTP_200_OK)
