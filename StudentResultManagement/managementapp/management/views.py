@@ -176,7 +176,7 @@ class UserViewSet(viewsets.ViewSet,
         if user is not None and account_activation_token.check_token(user, token):
             user.is_active = True
             user.save()
-            return HttpResponseRedirect(settings.FRONT_END_HOST + '/verify/success/')
+            return HttpResponseRedirect(settings.FRONT_END_HOST + '/verify/succeed/')
         else:
             return HttpResponseRedirect(settings.FRONT_END_HOST + '/verify/failed/')
 
