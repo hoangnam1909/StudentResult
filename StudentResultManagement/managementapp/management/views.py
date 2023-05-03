@@ -232,7 +232,7 @@ class CourseViewSet(viewsets.ViewSet,
     model = Course
     queryset = Course.objects.filter(active=True)
     serializer_class = CourseSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [IsAuthenticated, CourseOwner, ]
 
     def get_serializer_class(self):
         if self.action in ['topic', ]:
@@ -324,6 +324,7 @@ class CourseViewSet(viewsets.ViewSet,
             mark = Mark.objects.filter(course_id=pk).all()
             print('query counter = ' + str(len(connection.queries)))
             return Response(data={'course_id': pk,
+                                  'status': course.result_status,
                                   'mark_list': ListMarkSerializer(mark, many=True).data},
                             status=status.HTTP_200_OK)
 
