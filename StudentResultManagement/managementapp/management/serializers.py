@@ -106,7 +106,7 @@ class CourseMarkSerializer(serializers.ModelSerializer):
 class MarkDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = MarkDetail
-        fields = ['id', 'is_midterm', 'is_final', 'value', 'mark_s4', 'mark_s10']
+        fields = ['id', 'is_midterm', 'is_final', 'value']
 
 
 class StudentMarkSerializer(serializers.ModelSerializer):
@@ -133,7 +133,7 @@ class ListMarkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Mark
-        fields = ['id', 'student', 'marks_detail']
+        fields = ['id', 'student', 'marks_detail', 'mark_s4', 'mark_s10']
 
 
 class CommentCreateSerializer(serializers.ModelSerializer):
