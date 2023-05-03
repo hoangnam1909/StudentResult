@@ -237,10 +237,10 @@ class CourseViewSet(viewsets.ViewSet,
     def list(self, request, *args, **kwargs):
         user = request.user
         if user.role == User.Role.TEACHER:
-            queryset = Course.objects.filter(teacher=user.teacher).all()
+            queryset = Course.objects.filter(teacher=user.teacher).all().order_by('-start_date')
 
         if user.role == User.Role.STUDENT:
-            queryset = Course.objects.filter(students__code=user.student.code).all()
+            queryset = Course.objects.filter(students__code=user.student.code).all().order_by('-start_date')
 
         serializer = self.get_serializer(queryset, many=True)
         print(len(connection.queries))
