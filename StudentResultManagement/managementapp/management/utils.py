@@ -1,4 +1,5 @@
 import pytz
+import numpy as np
 
 local_tz = pytz.timezone('Etc/GMT-7')
 
@@ -13,3 +14,13 @@ def errors_to_json(errors):
     for field_name, field_errors in errors.items():
         errors_dict[field_name] = field_errors[0]
     return errors_dict
+
+
+def calculate_mark(course, midterm_marks, final_mark):
+    final = 0 if len(final_mark) == 0 else final_mark[0]
+
+    mark_s10 = np.average(midterm_marks) * course.subject.midterm_percent + final * course.subject.final_percent
+    mark_s10 /= 100
+    mark_s4 = mark_s10 * 4 / 10
+
+    return mark_s4, mark_s10

@@ -110,6 +110,8 @@ class Course(BaseModel):
 class Mark(BaseModel):
     student = models.ForeignKey('Student', on_delete=models.CASCADE, related_name='mark')
     course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='mark')
+    mark_s4 = models.FloatField(default=0)
+    mark_s10 = models.FloatField(default=0)
 
     def __str__(self):
         return '[{subject_code} - {class_code}] [{student_id} - {student_fullname}]' \

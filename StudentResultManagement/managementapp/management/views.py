@@ -341,6 +341,22 @@ class CourseViewSet(viewsets.ViewSet,
                     MarkDetail.objects.get(pk=index).delete()
 
             mark = Mark.objects.filter(course_id=pk).all()
+
+            for m in mark:
+                midterm_marks = list(MarkDetail.objects
+                                     .filter(mark_id=m.id)
+                                     .filter(is_midterm=True)
+                                     .values_list('value', flat=True))
+
+                final_mark = list(MarkDetail.objects
+                                  .filter(mark_id=m.id)
+                                  .filter(is_final=True)
+                                  .values_list('value', flat=True))
+                m.mark_s4, m.mark_s10 = calculate_mark(self.get_object(),
+                                                       midterm_marks=midterm_marks,
+                                                       final_mark=final_mark)
+                m.save()
+
             print('query counter = ' + str(len(connection.queries)))
             return Response(data={'course_id': pk,
                                   'mark_list': ListMarkSerializer(mark, many=True).data},
