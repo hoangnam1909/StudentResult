@@ -23,4 +23,4 @@ def calculate_mark(course, midterm_marks, final_mark):
     mark_s10 /= 100
     mark_s4 = mark_s10 * 4 / 10
 
-    return mark_s4, mark_s10
+    return round(mark_s4, 2), round(mark_s10, 2)
