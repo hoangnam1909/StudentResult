@@ -172,3 +172,6 @@ FRONT_END_HOST = 'localhost:5173'
 INTERNAL_IPS = [
     '127.0.0.1'
 ]
+
+SECURE_SSL_REDIRECT = False
+

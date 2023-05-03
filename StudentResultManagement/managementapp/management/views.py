@@ -72,7 +72,6 @@ class TeacherViewSet(viewsets.ViewSet,
 
     def get_permissions(self):
         return [AllowAny()]
-        # return [IsAuthenticated()]
 
     @action(methods=['get'], detail=False, url_path='courses')
     def get_courses(self, request):
@@ -98,10 +97,6 @@ class UserViewSet(viewsets.ViewSet,
         return [AllowAny()]
 
     def get_queryset(self):
-        """
-        Optionally restricts the returned purchases to a given user,
-        by filtering against a `username` query parameter in the URL.
-        """
         queryset = User.objects.all()
         email = self.request.query_params.get('email')
         if email is not None:
@@ -166,21 +161,6 @@ class UserViewSet(viewsets.ViewSet,
         except Exception as ex:
             return Response(data=str(ex), status=status.HTTP_400_BAD_REQUEST)
 
-    # @action(methods=['get'], detail=False, url_path='verify-test')
-    # def verify_test(self, request):
-    #     try:
-    #         user = User.objects.get(pk=3)
-    #         send_verify_email(request, user)
-    #         return Response(status=status.HTTP_200_OK)
-    #     except Exception as ex:
-    #         return Response(status=status.HTTP_400_BAD_REQUEST, data=ex.__str__())
-
-    # @action(methods=['get'], detail=False, url_path='template')
-    # def template_test(self, request):
-    #     self.renderer_classes = [TemplateHTMLRenderer]
-    #     self.template_name = 'profile_list.html'
-    #     return Response({'name': 'hoang nam'})
-
     @action(methods=['get'], permission_classes=[AllowAny],
             detail=False, url_path='verify')
     def verify(self, request):
@@ -197,12 +177,8 @@ class UserViewSet(viewsets.ViewSet,
             user.is_active = True
             user.save()
             return HttpResponseRedirect(settings.FRONT_END_HOST + '/verify/success/')
-            # return Response(status=status.HTTP_200_OK,
-            #                 data={"message": "You have successfully verified account"})
         else:
             return HttpResponseRedirect(settings.FRONT_END_HOST + '/verify/failed/')
-            # return Response(status=status.HTTP_400_BAD_REQUEST,
-            #                 data={"message": "Activation link is invalid!"})
 
     @action(methods=['get'], detail=False, url_path='current-user')
     def current_user(self, request):
@@ -213,18 +189,18 @@ class UserViewSet(viewsets.ViewSet,
         return self.request.user
 
 
-class SubjectViewSet(viewsets.ViewSet,
-                     generics.ListAPIView):
-    model = Subject
-    queryset = Subject.objects.all()
-    serializer_class = SubjectSerializer
-
-
-class ClassViewSet(viewsets.ViewSet,
-                   generics.ListAPIView):
-    model = Class
-    queryset = Class.objects.all()
-    serializer_class = ClassSerializer
+# class SubjectViewSet(viewsets.ViewSet,
+#                      generics.ListAPIView):
+#     model = Subject
+#     queryset = Subject.objects.all()
+#     serializer_class = SubjectSerializer
+#
+#
+# class ClassViewSet(viewsets.ViewSet,
+#                    generics.ListAPIView):
+#     model = Class
+#     queryset = Class.objects.all()
+#     serializer_class = ClassSerializer
 
 
 class StudentViewSet(viewsets.ViewSet):
@@ -396,13 +372,6 @@ class CourseViewSet(viewsets.ViewSet,
             return Response(data={'course_id': pk,
                                   'mark_list': ListMarkSerializer(mark, many=True).data},
                             status=status.HTTP_200_OK)
-
-
-# class MarkViewSet(viewsets.ViewSet,
-#                   generics.ListAPIView):
-#     model = Mark
-#     queryset = Mark.objects.all()
-#     serializer_class = MarkSerializer
 
 
 class TopicViewSet(viewsets.ViewSet,
