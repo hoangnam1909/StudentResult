@@ -294,6 +294,20 @@ class CourseViewSet(viewsets.ViewSet,
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
+    @action(methods=['post'], detail=True, url_path='lock')
+    def lock(self, request, pk):
+        self.permission_classes = [CourseOwner, ]
+        course = self.get_object()
+        course.result_status = Course.Status.LOCKED
+        course.save()
+
+        students = course.students.all()
+        email_list = list(User.objects.filter(student__in=students).values_list('email', flat=True))
+        send_mark_email(request, course, email_list)
+
+        return Response(status=status.HTTP_200_OK,
+                        data={'message': 'Result Locked'})
+
     @action(methods=['get', 'post'], detail=True, url_path='mark')
     def get_mark(self, request, pk):
         self.permission_classes = [CourseOwner, ]
@@ -314,6 +328,10 @@ class CourseViewSet(viewsets.ViewSet,
                             status=status.HTTP_200_OK)
 
         if request.method == 'POST':
+            if self.get_object().result_status == Course.Status.LOCKED:
+                return Response(status=status.HTTP_400_BAD_REQUEST,
+                                data={'message': 'Result locked'})
+
             data = request.data
             object_name = namedtuple("ObjectName", data.keys())(*data.values())
             mark = object_name.mark_list

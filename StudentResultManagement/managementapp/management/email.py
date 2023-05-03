@@ -15,7 +15,6 @@ from .token import *
 
 
 def send_verify_email(request, user):
-    domain = get_current_site(request).domain
     uid = urlsafe_base64_encode(force_bytes(user.id))
     token = account_activation_token.make_token(user)
 
@@ -34,6 +33,28 @@ def send_verify_email(request, user):
         settings.EMAIL_HOST_USER,
         # rec list
         [user.email, ]
+    )
+
+    email.attach_alternative(html_content, "text/html")
+    email.send()
+
+
+def send_mark_email(request, course, email_list):
+    html_content = render_to_string("mark_notification.html",
+                                    {"subject_name": course,
+                                     "verify_link": request.build_absolute_uri(
+                                         '/course/verify/')})
+    text_content = strip_tags(html_content)
+
+    email = EmailMultiAlternatives(
+        # subject
+        "Thông báo có điểm",
+        # content
+        text_content,
+        # from email
+        settings.EMAIL_HOST_USER,
+        # rec list
+        email_list
     )
 
     email.attach_alternative(html_content, "text/html")

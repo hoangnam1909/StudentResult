@@ -85,7 +85,7 @@ class Class(BaseModel):
 class Course(BaseModel):
     class Status(models.TextChoices):
         DRAFT = "DRAFT", "Draft"
-        DONE = "DONE", "Done"
+        LOCKED = "LOCKED", "Locked"
 
     base_status = Status.DRAFT
 
