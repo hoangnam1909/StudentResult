@@ -67,7 +67,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "https://schoolmanagement-e3fo.onrender.com"
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False
@@ -167,7 +168,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'nguyenhoangnam023@gmail.com'
 EMAIL_HOST_PASSWORD = 'vywexzibggzbqhnm'
 
-FRONT_END_HOST = 'http://localhost:5173'
+# FRONT_END_HOST = 'http://localhost:5173'
+FRONT_END_HOST = 'https://schoolmanagement-e3fo.onrender.com'
 
 INTERNAL_IPS = [
     '127.0.0.1'
