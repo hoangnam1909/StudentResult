@@ -249,11 +249,11 @@ class CourseViewSet(viewsets.ViewSet,
     @action(methods=['get', 'post'], detail=True, url_path='topic')
     def topic(self, request, pk):
         self.permission_classes = [CourseTopicPermission, ]
-        self.get_object()
+        course = self.get_object()
 
         if request.method == 'GET':
             self.pagination_class = TopicPaginator
-            queryset = self.get_object().topics.all()
+            queryset = course.topics.all()
 
             page = self.paginate_queryset(queryset)
             if page is not None:
@@ -322,7 +322,7 @@ class CourseViewSet(viewsets.ViewSet,
                             status=status.HTTP_200_OK)
 
         if request.method == 'POST':
-            if self.get_object().result_status == Course.Status.LOCKED:
+            if course.result_status == Course.Status.LOCKED:
                 return Response(status=status.HTTP_400_BAD_REQUEST,
                                 data={'message': 'Result locked'})
 
@@ -364,7 +364,7 @@ class CourseViewSet(viewsets.ViewSet,
                                   .filter(mark_id=m.id)
                                   .filter(is_final=True)
                                   .values_list('value', flat=True))
-                m.mark_s4, m.mark_s10 = calculate_mark(self.get_object(),
+                m.mark_s4, m.mark_s10 = calculate_mark(course,
                                                        midterm_marks=midterm_marks,
                                                        final_mark=final_mark)
                 m.save()
