@@ -42,7 +42,7 @@ def send_verify_email(request, user):
 def send_mark_email(request, course, email_list):
     html_content = render_to_string("mark_notification.html",
                                     {"subject_name": course,
-                                     "verify_link": settings.FRONT_END_HOST + '/user/grades'})
+                                     "link_to_page": settings.FRONT_END_HOST + '/user/grades'})
     text_content = strip_tags(html_content)
 
     email = EmailMultiAlternatives(
