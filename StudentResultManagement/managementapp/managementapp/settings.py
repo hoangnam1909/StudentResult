@@ -109,13 +109,13 @@ import pymysql
 pymysql.install_as_MySQLdb()
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'result_management',
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': ''  # mặc định localhost
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'result_management',
+    #     'USER': 'root',
+    #     'PASSWORD': '123456',
+    #     'HOST': ''  # mặc định localhost
+    # }
 }
 
 # Password validation
