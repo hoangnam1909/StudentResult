@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-e#&z4x5e9p3#1lw5+kt3xr*2ujz2=q)#6m&tb14zxw5)g#e5#i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -109,13 +109,13 @@ import pymysql
 pymysql.install_as_MySQLdb()
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'result_management',
-    #     'USER': 'root',
-    #     'PASSWORD': '123456',
-    #     'HOST': ''  # mặc định localhost
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'result_management',
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'HOST': ''  # mặc định localhost
+    }
 }
 
 # Password validation
@@ -168,8 +168,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'nguyenhoangnam023@gmail.com'
 EMAIL_HOST_PASSWORD = 'vywexzibggzbqhnm'
 
-# FRONT_END_HOST = 'http://localhost:5173'
-FRONT_END_HOST = 'https://schoolmanagement-e3fo.onrender.com'
+FRONT_END_HOST = 'http://localhost:5173'
+# FRONT_END_HOST = 'https://schoolmanagement-e3fo.onrender.com'
 
 INTERNAL_IPS = [
     '127.0.0.1'
