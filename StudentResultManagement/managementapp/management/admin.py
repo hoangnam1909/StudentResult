@@ -116,7 +116,7 @@ class MarkAdmin(admin.ModelAdmin):
                      'course__subject__id',
                      'course__subject__name',
                      'course__course_class__id']
-    inlines = [ProductVariantInline, ]
+    # inlines = [ProductVariantInline, ]
 
 
 class SubjectAdmin(admin.ModelAdmin):
@@ -156,6 +156,7 @@ admin.site.register(Faculty, FacultyAdmin)
 admin.site.register(Class, ClassAdmin)
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Mark, MarkAdmin)
+admin.site.register(MarkDetail)
 admin.site.register(Topic, TopicAdmin)
 admin.site.register(Comment)
 admin.site.register(Student)

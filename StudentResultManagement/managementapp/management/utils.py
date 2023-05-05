@@ -17,9 +17,10 @@ def errors_to_json(errors):
 
 
 def calculate_mark(course, midterm_marks, final_mark):
+    midterm = 0 if len(midterm_marks) == 0 else midterm_marks
     final = 0 if len(final_mark) == 0 else final_mark[0]
 
-    mark_s10 = np.average(midterm_marks) * course.subject.midterm_percent + final * course.subject.final_percent
+    mark_s10 = np.average(midterm) * course.subject.midterm_percent + final * course.subject.final_percent
     mark_s10 /= 100
     mark_s4 = mark_s10 * 4 / 10
 

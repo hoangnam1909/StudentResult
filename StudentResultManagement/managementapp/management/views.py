@@ -329,7 +329,9 @@ class CourseViewSet(viewsets.ViewSet,
             data = request.data
             object_name = namedtuple("ObjectName", data.keys())(*data.values())
             mark = object_name.mark_list
+            mark_id_list = []
             for m in mark:
+                mark_id_list.append(int(m.get('id')))
                 if len(m.get('marks_detail')) > 6:
                     return Response(status=status.HTTP_400_BAD_REQUEST,
                                     data={'message': 'Do not enter more than 5 columns of midterm scores'})
@@ -338,6 +340,7 @@ class CourseViewSet(viewsets.ViewSet,
 
                 for md in m.get('marks_detail'):
                     mark_detail_id = md.get('id')
+                    print(md.get('id'))
                     if mark_detail_id > 0:
                         if mark_detail_id in list_mark_detail_id:
                             MarkDetail.objects.filter(id=mark_detail_id).update(value=md.get('value'))
@@ -352,7 +355,7 @@ class CourseViewSet(viewsets.ViewSet,
                 for index in list_mark_detail_id:
                     MarkDetail.objects.get(pk=index).delete()
 
-            mark = Mark.objects.filter(course_id=pk).all()
+            mark = Mark.objects.filter(course_id__in=mark_id_list).all()
 
             for m in mark:
                 midterm_marks = list(MarkDetail.objects
@@ -370,9 +373,7 @@ class CourseViewSet(viewsets.ViewSet,
                 m.save()
 
             print('query counter = ' + str(len(connection.queries)))
-            return Response(data={'course_id': pk,
-                                  'mark_list': ListMarkSerializer(mark, many=True).data},
-                            status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_200_OK)
 
 
 class TopicViewSet(viewsets.ViewSet,
