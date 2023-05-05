@@ -158,7 +158,7 @@ class Comment(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return 'Topic_id {topic_id} - user_id {user_id} - {created_date}' \
-            .format(topic_id=self.topic_id,
-                    user_id=self.user_id,
+        return 'Topic: {topic_title} - user: {username} - {created_date}' \
+            .format(topic_title=self.topic.title,
+                    username=self.user.username,
                     created_date=self.created_date)

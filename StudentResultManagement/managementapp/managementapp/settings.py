@@ -22,9 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-e#&z4x5e9p3#1lw5+kt3xr*2ujz2=q)#6m&tb14zxw5)g#e5#i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1',
+                 'localhost',
+                 'https://schoolmanagement-e3fo.onrender.com']
 
 # Application definition
 
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'corsheaders',
     'debug_toolbar',
+    'rangefilter',
 ]
 
 CKEDITOR_UPLOAD_PATH = "ckeditor/management/"
@@ -168,8 +171,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'nguyenhoangnam023@gmail.com'
 EMAIL_HOST_PASSWORD = 'vywexzibggzbqhnm'
 
-FRONT_END_HOST = 'http://localhost:5173'
-# FRONT_END_HOST = 'https://schoolmanagement-e3fo.onrender.com'
+# FRONT_END_HOST = 'http://localhost:5173'
+FRONT_END_HOST = 'https://schoolmanagement-e3fo.onrender.com'
 
 INTERNAL_IPS = [
     '127.0.0.1'
