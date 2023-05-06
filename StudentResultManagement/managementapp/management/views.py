@@ -253,7 +253,7 @@ class CourseViewSet(viewsets.ViewSet,
 
         if request.method == 'GET':
             self.pagination_class = TopicPaginator
-            queryset = course.topics.all()
+            queryset = course.topics.all().order_by('-created_date')
 
             page = self.paginate_queryset(queryset)
             if page is not None:
