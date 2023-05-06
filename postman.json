@@ -73,29 +73,23 @@
 								},
 								{
 									"key": "username",
-									"value": "1951052422",
+									"value": "thanh.dh1",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "1951052422",
+									"value": "thanh.dh1",
 									"type": "text"
 								},
 								{
 									"key": "client_id",
-									"value": "s1YlkjFMIYtDGvzCbXjUN4UY8W3ntiGHfBQ3PLus",
+									"value": "{{CLIENT_ID}}",
 									"type": "text"
 								},
 								{
 									"key": "client_secret",
-									"value": "yrhqtXtYY25Y9S0pzsHo4Eg77CBrXZ0hINk0KjHPfdCrgrEQNoPXV7KrPUqC0u2T2O2QYVhc1jME5HLVa8QdGiIh8p3xe0PeFQ2vmplctwKXDWN5PmTK5QOoP7uCa3EP",
+									"value": "{{CLIENT_SECRET}}",
 									"type": "text"
-								},
-								{
-									"key": "",
-									"value": "pbkdf2_sha256$390000$PSZFMDrrxvvTR8EPqdKsxi$bb3S7UX4BAzV5cpYXdfqFTjBxRRTQ3MhAY690K7Mp70=",
-									"type": "text",
-									"disabled": true
 								}
 							]
 						},
@@ -123,7 +117,7 @@
 							"formdata": [
 								{
 									"key": "first_name",
-									"value": "Nguyen Hoang",
+									"value": "Lương Hoàng",
 									"type": "text"
 								},
 								{
@@ -133,7 +127,7 @@
 								},
 								{
 									"key": "email",
-									"value": "1951052125nam@ou.edu.vn",
+									"value": "1951052123nam@ou.edu.vn",
 									"type": "text"
 								},
 								{
@@ -143,18 +137,18 @@
 								},
 								{
 									"key": "username",
-									"value": "1951052422",
+									"value": "1951052123",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "1951052422",
+									"value": "1951052123",
 									"type": "text"
 								},
 								{
 									"key": "avatar",
 									"type": "file",
-									"src": "/C:/Users/Nam/Pictures/49914646_967707916757510_1545321635303653376_n (2).jpg"
+									"src": "/C:/Users/Nam/Pictures/269639266_1003514793880511_2778633446153121529_n.png"
 								}
 							]
 						},
@@ -178,7 +172,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer yKAmzpdWUEYk9c4oV2aVphkgvLEmpT",
+								"value": "Bearer YUnMhPrvjLLk4lNSOLRGCO2ej2Xa8j",
 								"type": "text"
 							}
 						],
@@ -203,7 +197,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer bLIhTpvlnrmiNgGNXYh2HrXPvs5YCZ",
+								"value": "Bearer 2Y0y0JgXkTfVU4FomOkZDTMZtshBln",
 								"type": "text"
 							}
 						],
@@ -212,19 +206,33 @@
 							"formdata": [
 								{
 									"key": "first_name",
-									"value": "Nguyen Hoangg",
+									"value": "Nam ngu lozqq",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Namqq",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "1951052123ccc@ou.edu.vn",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "true",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{8000}}/user/current-user/",
+							"raw": "{{8000}}/user/",
 							"host": [
 								"{{8000}}"
 							],
 							"path": [
 								"user",
-								"current-user",
 								""
 							]
 						}
@@ -276,28 +284,333 @@
 			]
 		},
 		{
+			"name": "teacher",
+			"item": [
+				{
+					"name": "get_courses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer gLtHWaTrDeI32tlettWQ4lArw42NC5",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{8000}}/teacher/courses/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"teacher",
+								"courses",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test",
+			"item": [
+				{
+					"name": "verify_test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{8000}}/user/verify-test/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"user",
+								"verify-test",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "course",
+			"item": [
+				{
+					"name": "get_course",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YGLhVjk0A0U20hWiDJjMogm7Vq4GCb",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{8000}}/course/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"course",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_topic",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer IXQwWpowdGd6CmdH1oolLoUVIjaCsV",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{8000}}/course/:id/topic/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"course",
+								":id",
+								"topic",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_topic",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer IXQwWpowdGd6CmdH1oolLoUVIjaCsV",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "téc téc",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "tét téttt",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{8000}}/course/:id/topic/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"course",
+								":id",
+								"topic",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_student",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer qdUCNvjJslJfoyim3UZocfErVvRC5U",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{8000}}/course/:id/student/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"course",
+								":id",
+								"student",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_mark",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YUnMhPrvjLLk4lNSOLRGCO2ej2Xa8j",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{8000}}/course/:course_id/mark/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"course",
+								":course_id",
+								"mark",
+								""
+							],
+							"variable": [
+								{
+									"key": "course_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_mark",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YUnMhPrvjLLk4lNSOLRGCO2ej2Xa8j",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"course_id\": \"2\",\r\n    \"status\": \"DRAFT\",\r\n    \"mark_list\": [\r\n        {\r\n            \"id\": 13,\r\n            \"student\": {\r\n                \"code\": \"1951052099\",\r\n                \"user\": {\r\n                    \"first_name\": \"Bùi Mạnh\",\r\n                    \"last_name\": \"Linh\"\r\n                }\r\n            },\r\n            \"marks_detail\": [\r\n                {\r\n                    \"id\": 137,\r\n                    \"is_midterm\": true,\r\n                    \"is_final\": false,\r\n                    \"value\": 3.0\r\n                },\r\n                {\r\n                    \"id\": 138,\r\n                    \"is_midterm\": false,\r\n                    \"is_final\": true,\r\n                    \"value\": 3.0\r\n                },\r\n                {\r\n                    \"id\": 139,\r\n                    \"is_midterm\": true,\r\n                    \"is_final\": false,\r\n                    \"value\": 3.0\r\n                }\r\n            ],\r\n            \"mark_s4\": 1.2,\r\n            \"mark_s10\": 3.0\r\n        },\r\n        {\r\n            \"id\": 14,\r\n            \"student\": {\r\n                \"code\": \"1951052123\",\r\n                \"user\": {\r\n                    \"first_name\": \"Lương Hoàng\",\r\n                    \"last_name\": \"Nam\"\r\n                }\r\n            },\r\n            \"marks_detail\": [\r\n                {\r\n                    \"id\": 122,\r\n                    \"is_midterm\": true,\r\n                    \"is_final\": false,\r\n                    \"value\": 3.0\r\n                },\r\n                {\r\n                    \"id\": 123,\r\n                    \"is_midterm\": false,\r\n                    \"is_final\": true,\r\n                    \"value\": 3.0\r\n                },\r\n                {\r\n                    \"id\": 124,\r\n                    \"is_midterm\": true,\r\n                    \"is_final\": false,\r\n                    \"value\": 3.0\r\n                }\r\n            ],\r\n            \"mark_s4\": 1.2,\r\n            \"mark_s10\": 3.0\r\n        },\r\n        {\r\n            \"id\": 15,\r\n            \"student\": {\r\n                \"code\": \"1951052125\",\r\n                \"user\": {\r\n                    \"first_name\": \"Nguyễn Hoàng\",\r\n                    \"last_name\": \"Nam\"\r\n                }\r\n            },\r\n            \"marks_detail\": [\r\n                {\r\n                    \"id\": 0,\r\n                    \"is_midterm\": true,\r\n                    \"is_final\": false,\r\n                    \"value\": 7.0\r\n                },\r\n                {\r\n                    \"id\": 0,\r\n                    \"is_midterm\": false,\r\n                    \"is_final\": true,\r\n                    \"value\": 8.0\r\n                },\r\n                {\r\n                    \"id\": 0,\r\n                    \"is_midterm\": true,\r\n                    \"is_final\": false,\r\n                    \"value\": 9.0\r\n                }\r\n            ],\r\n            \"mark_s4\": 0.0,\r\n            \"mark_s10\": 0.0\r\n        },\r\n        {\r\n            \"id\": 71,\r\n            \"student\": {\r\n                \"code\": \"1951052055\",\r\n                \"user\": {\r\n                    \"first_name\": \"Nguyễn Minh\",\r\n                    \"last_name\": \"Hiếu\"\r\n                }\r\n            },\r\n            \"marks_detail\": [\r\n                {\r\n                    \"id\": 0,\r\n                    \"is_midterm\": true,\r\n                    \"is_final\": false,\r\n                    \"value\": 7.0\r\n                },\r\n                {\r\n                    \"id\": 0,\r\n                    \"is_midterm\": false,\r\n                    \"is_final\": true,\r\n                    \"value\": 8.0\r\n                },\r\n                {\r\n                    \"id\": 0,\r\n                    \"is_midterm\": true,\r\n                    \"is_final\": false,\r\n                    \"value\": 9.0\r\n                }\r\n            ],\r\n            \"mark_s4\": 0.0,\r\n            \"mark_s10\": 0.0\r\n        },\r\n        {\r\n            \"id\": 72,\r\n            \"student\": {\r\n                \"code\": \"deh83395\",\r\n                \"user\": {\r\n                    \"first_name\": \"deh83395\",\r\n                    \"last_name\": \"deh83395\"\r\n                }\r\n            },\r\n            \"marks_detail\": [],\r\n            \"mark_s4\": 0.0,\r\n            \"mark_s10\": 0.0\r\n        },\r\n        {\r\n            \"id\": 73,\r\n            \"student\": {\r\n                \"code\": \"dvr68046\",\r\n                \"user\": {\r\n                    \"first_name\": \"dvr68046\",\r\n                    \"last_name\": \"dvr68046\"\r\n                }\r\n            },\r\n            \"marks_detail\": [\r\n                {\r\n                    \"id\": 0,\r\n                    \"is_midterm\": true,\r\n                    \"is_final\": false,\r\n                    \"value\": 7.0\r\n                },\r\n                {\r\n                    \"id\": 0,\r\n                    \"is_midterm\": false,\r\n                    \"is_final\": true,\r\n                    \"value\": 8.0\r\n                },\r\n                {\r\n                    \"id\": 0,\r\n                    \"is_midterm\": true,\r\n                    \"is_final\": false,\r\n                    \"value\": 9.0\r\n                }\r\n            ],\r\n            \"mark_s4\": 0.0,\r\n            \"mark_s10\": 0.0\r\n        },\r\n        {\r\n            \"id\": 74,\r\n            \"student\": {\r\n                \"code\": \"hki40362\",\r\n                \"user\": {\r\n                    \"first_name\": \"hki40362\",\r\n                    \"last_name\": \"hki40362\"\r\n                }\r\n            },\r\n            \"marks_detail\": [],\r\n            \"mark_s4\": 0.0,\r\n            \"mark_s10\": 0.0\r\n        },\r\n        {\r\n            \"id\": 75,\r\n            \"student\": {\r\n                \"code\": \"lum15749\",\r\n                \"user\": {\r\n                    \"first_name\": \"lum15749\",\r\n                    \"last_name\": \"lum15749\"\r\n                }\r\n            },\r\n            \"marks_detail\": [],\r\n            \"mark_s4\": 0.0,\r\n            \"mark_s10\": 0.0\r\n        },\r\n        {\r\n            \"id\": 76,\r\n            \"student\": {\r\n                \"code\": \"rcs57385\",\r\n                \"user\": {\r\n                    \"first_name\": \"rcs57385\",\r\n                    \"last_name\": \"rcs57385\"\r\n                }\r\n            },\r\n            \"marks_detail\": [],\r\n            \"mark_s4\": 0.0,\r\n            \"mark_s10\": 0.0\r\n        },\r\n        {\r\n            \"id\": 77,\r\n            \"student\": {\r\n                \"code\": \"suz17527\",\r\n                \"user\": {\r\n                    \"first_name\": \"suz17527\",\r\n                    \"last_name\": \"suz17527\"\r\n                }\r\n            },\r\n            \"marks_detail\": [\r\n                {\r\n                    \"id\": 0,\r\n                    \"is_midterm\": true,\r\n                    \"is_final\": false,\r\n                    \"value\": 7.0\r\n                },\r\n                {\r\n                    \"id\": 0,\r\n                    \"is_midterm\": false,\r\n                    \"is_final\": true,\r\n                    \"value\": 8.0\r\n                },\r\n                {\r\n                    \"id\": 0,\r\n                    \"is_midterm\": true,\r\n                    \"is_final\": false,\r\n                    \"value\": 9.0\r\n                }\r\n            ],\r\n            \"mark_s4\": 0.0,\r\n            \"mark_s10\": 0.0\r\n        },\r\n        {\r\n            \"id\": 78,\r\n            \"student\": {\r\n                \"code\": \"vfs10317\",\r\n                \"user\": {\r\n                    \"first_name\": \"vfs10317\",\r\n                    \"last_name\": \"vfs10317\"\r\n                }\r\n            },\r\n            \"marks_detail\": [],\r\n            \"mark_s4\": 0.0,\r\n            \"mark_s10\": 0.0\r\n        },\r\n        {\r\n            \"id\": 79,\r\n            \"student\": {\r\n                \"code\": \"vtn66753\",\r\n                \"user\": {\r\n                    \"first_name\": \"vtn66753\",\r\n                    \"last_name\": \"vtn66753\"\r\n                }\r\n            },\r\n            \"marks_detail\": [],\r\n            \"mark_s4\": 0.0,\r\n            \"mark_s10\": 0.0\r\n        },\r\n        {\r\n            \"id\": 80,\r\n            \"student\": {\r\n                \"code\": \"wax15680\",\r\n                \"user\": {\r\n                    \"first_name\": \"wax15680\",\r\n                    \"last_name\": \"wax15680\"\r\n                }\r\n            },\r\n            \"marks_detail\": [],\r\n            \"mark_s4\": 0.0,\r\n            \"mark_s10\": 0.0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{8000}}/course/:id/mark/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"course",
+								":id",
+								"mark",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lock_result",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer xFjQhM8UTYva4ZqQZbeRkWkUBfr0vd",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{8000}}/course/:id/lock/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"course",
+								":id",
+								"lock",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "topic",
 			"item": [
 				{
 					"name": "get_comments",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer T28c4huoUTTcNy3LrIVlnnfuzJLOS5",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{8000}}/topic/:topic-id/comments/",
+							"raw": "{{8000}}/topic/:topic-id/comment/",
 							"host": [
 								"{{8000}}"
 							],
 							"path": [
 								"topic",
 								":topic-id",
-								"comments",
+								"comment",
 								""
 							],
 							"variable": [
 								{
 									"key": "topic-id",
-									"value": "1"
+									"value": "5"
 								}
 							]
 						}
@@ -311,7 +624,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer EOPtopy2jYzLbBibIWKUTQtSuA6qAa",
+								"value": "Bearer Kb4wpjrc5QB20hTYzAY2LOtirFzoxl",
 								"type": "text"
 							}
 						],
@@ -320,7 +633,7 @@
 							"formdata": [
 								{
 									"key": "content",
-									"value": "1951052422 comment1",
+									"value": "comment3",
 									"type": "text"
 								},
 								{
@@ -420,156 +733,6 @@
 			]
 		},
 		{
-			"name": "teacher",
-			"item": [
-				{
-					"name": "get_courses",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer gLtHWaTrDeI32tlettWQ4lArw42NC5",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{8000}}/teacher/courses/",
-							"host": [
-								"{{8000}}"
-							],
-							"path": [
-								"teacher",
-								"courses",
-								""
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "test",
-			"item": [
-				{
-					"name": "verify_test",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{8000}}/user/verify-test/",
-							"host": [
-								"{{8000}}"
-							],
-							"path": [
-								"user",
-								"verify-test",
-								""
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "course",
-			"item": [
-				{
-					"name": "get_topic",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{8000}}/course/:id/topic/",
-							"host": [
-								"{{8000}}"
-							],
-							"path": [
-								"course",
-								":id",
-								"topic",
-								""
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "add_topic",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer GphHCYm5s8pz68FnQUz2eV4eYeareT",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "title",
-									"value": "Ngày nộp bài tập lớn",
-									"type": "text"
-								},
-								{
-									"key": "content",
-									"value": "Thầy cho em hỏi khi nào thì nộp và vấn đáp bài tập lớn môn này ạ",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{8000}}/course/:id/topic/",
-							"host": [
-								"{{8000}}"
-							],
-							"path": [
-								"course",
-								":id",
-								"topic",
-								""
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get_course",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{8000}}/course/",
-							"host": [
-								"{{8000}}"
-							],
-							"path": [
-								"course",
-								""
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "user",
 			"item": [
 				{
@@ -611,6 +774,138 @@
 							"path": [
 								"user",
 								"get",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "nam",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "55",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{8000}}/user/specific-user/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"user",
+								"specific-user",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "comment",
+			"item": [
+				{
+					"name": "update_comment",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "content",
+									"value": "Sua cmt 2 ne",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{8000}}/comment/:id/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"comment",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_comments",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 123,\r\n    \"person\": [\r\n        {\r\n            \"Name\": \"Nguyen Hoang Nam\",\r\n            \"Age\": 22,\r\n            \"Country\": 1,\r\n            \"Address\": \"Binh Thanh District, HCMC\",\r\n            \"Married\": false\r\n        },\r\n        {\r\n            \"Name\": \"Otto Clay\",\r\n            \"Age\": 61,\r\n            \"Country\": 6,\r\n            \"Address\": \"Ap #897-1459 Quam Avenue\",\r\n            \"Married\": false\r\n        },\r\n        {\r\n            \"Name\": \"Connor Johnston\",\r\n            \"Age\": 73,\r\n            \"Country\": 7,\r\n            \"Address\": \"Ap #370-4647 Dis Av.\",\r\n            \"Married\": false\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{8000}}/comment/test/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"comment",
+								"test",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "student",
+			"item": [
+				{
+					"name": "get_mark",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer ce9SGVVgxknPOezMQ2s0lKw5t1CXTn",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{8000}}/student/mark/",
+							"host": [
+								"{{8000}}"
+							],
+							"path": [
+								"student",
+								"mark",
 								""
 							]
 						}

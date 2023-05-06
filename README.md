@@ -37,4 +37,4 @@ python manage.py runserver
 The project will be available at **127.0.0.1:8000**.
 
 ## Pythonanywhere
-Link [Student Result Management](https://hoangnam1909.pythonanywhere.com/).
+Link: [Student Result Management](https://hoangnam1909.pythonanywhere.com/).
