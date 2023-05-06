@@ -81,8 +81,6 @@ class CourseAdmin(admin.ModelAdmin):
     get_course.short_description = 'Course'
     get_course.admin_order_field = ['subject', ]
 
-    # get_course.admin_search_field = ['subject__id', 'subject__name', ]
-
     def get_teacher(self, obj):
         return '{fullname} - {email}' \
             .format(fullname=obj.teacher.user.first_name + ' ' + obj.teacher.user.last_name,
@@ -90,8 +88,6 @@ class CourseAdmin(admin.ModelAdmin):
 
     get_teacher.short_description = 'Teacher'
     get_teacher.admin_order_field = 'teacher'
-
-    # get_teacher.admin_search_field = 'teacher'
 
     def get_student_count(self, obj):
         return str(obj.students.all().count())
@@ -116,7 +112,6 @@ class MarkAdmin(admin.ModelAdmin):
                      'course__subject__id',
                      'course__subject__name',
                      'course__course_class__id']
-    # inlines = [ProductVariantInline, ]
 
 
 class SubjectAdmin(admin.ModelAdmin):
