@@ -307,7 +307,6 @@ class CourseViewSet(viewsets.ViewSet,
         course = self.get_object()
         students_code = course.students.all()
         students_code = students_code.values_list('code', flat=True)
-        print(students_code)
         for code in students_code:
             if not Mark.objects.filter(course_id=pk).filter(student_id=code).exists():
                 mark = Mark(course_id=pk, student_id=code)
@@ -340,7 +339,7 @@ class CourseViewSet(viewsets.ViewSet,
 
                 for md in m.get('marks_detail'):
                     mark_detail_id = md.get('id')
-                    print(md.get('id'))
+                    # print(md.get('id'))
                     if mark_detail_id > 0:
                         if mark_detail_id in list_mark_detail_id:
                             MarkDetail.objects.filter(id=mark_detail_id).update(value=md.get('value'))
@@ -352,11 +351,9 @@ class CourseViewSet(viewsets.ViewSet,
                                                      value=md.get('value'))
                         new_mark_detail.save()
 
-                for index in list_mark_detail_id:
-                    MarkDetail.objects.get(pk=index).delete()
+                MarkDetail.objects.filter(pk__in=list_mark_detail_id).delete()
 
-            mark = Mark.objects.filter(course_id__in=mark_id_list).all()
-
+            mark = Mark.objects.filter(pk__in=mark_id_list).all()
             for m in mark:
                 midterm_marks = list(MarkDetail.objects
                                      .filter(mark_id=m.id)
@@ -367,13 +364,17 @@ class CourseViewSet(viewsets.ViewSet,
                                   .filter(mark_id=m.id)
                                   .filter(is_final=True)
                                   .values_list('value', flat=True))
+
                 m.mark_s4, m.mark_s10 = calculate_mark(course,
                                                        midterm_marks=midterm_marks,
                                                        final_mark=final_mark)
                 m.save()
 
             print('query counter = ' + str(len(connection.queries)))
-            return Response(status=status.HTTP_200_OK)
+            return Response(data={'course_id': pk,
+                                  'status': self.get_object().result_status,
+                                  'mark_list': ListMarkSerializer(mark, many=True).data},
+                            status=status.HTTP_200_OK)
 
 
 class TopicViewSet(viewsets.ViewSet,
