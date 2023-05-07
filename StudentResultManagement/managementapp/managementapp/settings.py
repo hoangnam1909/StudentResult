@@ -169,7 +169,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'dev.nhn1909@gmail.com'
-EMAIL_HOST_PASSWORD = 'bcyruivwbmscakqy'
+EMAIL_HOST_PASSWORD = '...'
 
 # FRONT_END_HOST = 'http://localhost:5173'
 FRONT_END_HOST = 'https://schoolmanagement-e3fo.onrender.com'
