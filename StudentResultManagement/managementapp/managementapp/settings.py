@@ -168,8 +168,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'nguyenhoangnam023@gmail.com'
-EMAIL_HOST_PASSWORD = 'vywexzibggzbqhnm'
+EMAIL_HOST_USER = 'dev.nhn1909@gmail.com'
+EMAIL_HOST_PASSWORD = 'bcyruivwbmscakqy'
 
 # FRONT_END_HOST = 'http://localhost:5173'
 FRONT_END_HOST = 'https://schoolmanagement-e3fo.onrender.com'
